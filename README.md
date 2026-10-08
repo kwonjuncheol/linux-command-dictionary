@@ -1,2 +1,3 @@
 2026년 2학기 시스템프로그래밍[B]
 중간고사 리눅스 명령어 사전
+https://kwonjuncheol.github.io/linux-command-dictionary/
