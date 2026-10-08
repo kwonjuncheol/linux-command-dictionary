@@ -1,0 +1,497 @@
+[
+  {
+    "name": "ls",
+    "description": "현재 디렉터리의 파일이나 디렉터리 목록을 출력하는 명령어",
+    "usage": "ls [옵션] [디렉터리/파일]",
+    "options": [
+      "-a (숨김 파일 포함)",
+      "-l (상세 정보 출력)"
+    ],
+    "example": "ls -al",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "cd",
+    "description": "작업 중인 디렉터리 위치를 이동하는 명령어",
+    "usage": "cd [이동할 경로]",
+    "options": [
+      "-P (심볼릭 링크가 아닌 물리적 경로로 이동)"
+    ],
+    "example": "cd /usr/local",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "pwd",
+    "description": "현재 작업 중인 디렉터리의 절대 경로를 출력하는 명령어",
+    "options": [
+      "-P (실제 물리적 경로 출력)"
+    ],
+    "example": "pwd",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "cp",
+    "description": "파일이나 디렉터리를 복사하는 명령어",
+    "usage": "cp [옵션] [원본] [복사본]",
+    "options": [
+      "-r (디렉터리 복사 시 하위 내용 포함)",
+      "-f (강제 복사)"
+    ],
+    "example": "cp -r src_dir dest_dir",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "mv",
+    "description": "파일이나 디렉터리를 이동하거나 이름을 변경하는 명령어",
+    "usage": "mv [옵션] [원본] [대상]",
+    "options": [
+      "-f (덮어쓰기 여부 묻지 않음)",
+      "-i (덮어쓰기 시 경고 확인)"
+    ],
+    "example": "mv old_name.txt new_name.txt",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "rm",
+    "description": "파일이나 디렉터리를 삭제하는 명령어",
+    "usage": "rm [옵션] [파일/디렉터리]",
+    "options": [
+      "-r (하위 디렉터리 포함 삭제)",
+      "-f (강제 삭제)"
+    ],
+    "example": "rm -rf temp_folder",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "mkdir",
+    "description": "새로운 디렉터리를 생성하는 명령어",
+    "usage": "mkdir [옵션] [디렉터리명]",
+    "options": [
+      "-p (상위 경로까지 필요한 디렉터리 동시 생성)"
+    ],
+    "example": "mkdir -p /home/user/docs",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "rmdir",
+    "description": "비어 있는 디렉터리를 삭제하는 명령어",
+    "usage": "rmdir [디렉터리명]",
+    "options": [
+      "-p (상위 디렉터리도 비어있으면 연쇄 삭제)"
+    ],
+    "example": "rmdir empty_folder",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "touch",
+    "description": "크기가 0인 빈 파일을 생성하거나 파일의 수정 시간을 변경하는 명령어",
+    "usage": "touch [파일명]",
+    "options": [
+      "-c (파일이 없으면 생성하지 않음)"
+    ],
+    "example": "touch index.html",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "cat",
+    "description": "파일의 내용을 화면에 출력하거나 파일을 합치는 명령어",
+    "usage": "cat [옵션] [파일명]",
+    "options": [
+      "-n (행 번호 출력)"
+    ],
+    "example": "cat -n text.txt",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "less",
+    "description": "파일의 내용을 페이지 단위로 끊어서 읽게 해주는 명령어",
+    "usage": "less [파일명]",
+    "options": [
+      "-N (행 번호 표시)"
+    ],
+    "example": "less large_log.txt",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "head",
+    "description": "파일의 앞부분 일부를 출력하는 명령어 (기본 10줄)",
+    "usage": "head [옵션] [파일명]",
+    "options": [
+      "-n [숫자] (지정한 줄 수 만큼 출력)"
+    ],
+    "example": "head -n 5 log.txt",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "tail",
+    "description": "파일의 뒷부분 일부를 출력하는 명령어 (로그 실시간 모니터링에 유용)",
+    "usage": "tail [옵션] [파일명]",
+    "options": [
+      "-f (파일 변경 내용을 실시간으로 출력)",
+      "-n [숫자] (지정한 줄 수 출력)"
+    ],
+    "example": "tail -f /var/log/syslog",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "grep",
+    "description": "파일 내에서 특정 문자열이나 패턴을 검색하는 명령어",
+    "usage": "grep [옵션] [패턴] [파일명]",
+    "options": [
+      "-i (대소문자 무시)",
+      "-r (하위 디렉터리 내 모든 파일 검색)",
+      "-n (줄 번호 출력)"
+    ],
+    "example": "grep -rn 'error' /var/log/",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "find",
+    "description": "지정한 조건으로 파일이나 디렉터리를 검색하는 명령어",
+    "usage": "find [경로] [조건] [액션]",
+    "options": [
+      "-name (이름으로 검색)",
+      "-type f (파일만 검색)",
+      "-type d (디렉터리만 검색)"
+    ],
+    "example": "find /home -name '*.txt'",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "which",
+    "description": "명령어가 실행될 때 참조하는 실행 파일(Binary)의 경로를 찾는 명령어",
+    "usage": "which [명령어이름]",
+    "options": [],
+    "example": "which python3",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "df",
+    "description": "시스템에 장착된 디스크의 남은 용량을 확인하는 명령어",
+    "usage": "df [옵션]",
+    "options": [
+      "-h (사람이 읽기 쉬운 단위로 표시)"
+    ],
+    "example": "df -h",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "du",
+    "description": "특정 파일이나 디렉터리가 차지하고 있는 용량을 확인하는 명령어",
+    "usage": "du [옵션] [경로]",
+    "options": [
+      "-sh (총 용량만 요약해서 표시)"
+    ],
+    "example": "du -sh /var/log",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "free",
+    "description": "시스템의 메모리(RAM) 사용량을 확인하는 명령어",
+    "usage": "free [옵션]",
+    "options": [
+      "-h (메가바이트/기가바이트 단위로 보기 쉽게 표시)"
+    ],
+    "example": "free -h",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "top",
+    "description": "리눅스 시스템의 실시간 프로세스 자원 사용 상태를 모니터링하는 명령어",
+    "usage": "top",
+    "options": [],
+    "example": "top",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "htop",
+    "description": "top 명령어의 개선판으로 색상과 인터페이스가 편리한 프로세스 모니터링 도구",
+    "usage": "htop",
+    "options": [],
+    "example": "htop",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "ps",
+    "description": "현재 실행 중인 프로세스의 목록을 스냅샷 형태로 출력하는 명령어",
+    "usage": "ps [옵션]",
+    "options": [
+      "-ef (모든 프로세스 상세 출력)",
+      "aux (BSD 스타일 상세 출력)"
+    ],
+    "example": "ps -ef | grep java",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "kill",
+    "description": "실행 중인 프로세스에 특정 시그널(주로 종료)을 보내는 명령어",
+    "usage": "kill [옵션] [PID]",
+    "options": [
+      "-9 (강제 종료 시그널 SIGKILL 전송)"
+    ],
+    "example": "kill -9 1234",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "killall",
+    "description": "프로세스 이름(PID 대신)으로 일치하는 모든 프로세스를 종료하는 명령어",
+    "usage": "killall [프로세스명]",
+    "options": [
+      "-I (대소문자 구분 안 함)"
+    ],
+    "example": "killall nginx",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "bg",
+    "description": "일시 중지된 프로세스를 백그라운드(Background)에서 실행되도록 재개하는 명령어",
+    "usage": "bg [작업번호]",
+    "options": [],
+    "example": "bg %1",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "fg",
+    "description": "백그라운드에서 돌고 있는 작업을 포그라운드(Foreground)로 가져오는 명령어",
+    "usage": "fg [작업번호]",
+    "options": [],
+    "example": "fg %1",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "jobs",
+    "description": "현재 백그라운드에서 실행 중이거나 멈춰 있는 작업 목록을 보여주는 명령어",
+    "usage": "jobs [옵션]",
+    "options": [
+      "-l (PID까지 함께 표시)"
+    ],
+    "example": "jobs",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "chmod",
+    "description": "파일이나 디렉터리의 접근 권한(Permission)을 변경하는 명령어",
+    "usage": "chmod [옵션] [권한값] [파일명]",
+    "options": [
+      "-R (하위 파일까지 재귀적으로 권한 변경)"
+    ],
+    "example": "chmod 755 script.sh",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "chown",
+    "description": "파일이나 디렉터리의 소유자(Owner) 및 그룹(Group)을 변경하는 명령어",
+    "usage": "chown [옵션] [소유자:그룹] [파일명]",
+    "options": [
+      "-R (하위 항목 모두 변경)"
+    ],
+    "example": "chown -R user:root /var/www",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "sudo",
+    "description": "관리자(root) 권한을 빌려서 명령어를 실행하게 해주는 명령어",
+    "usage": "sudo [명령어]",
+    "options": [
+      "-i (root 권한으로 셸 전환)"
+    ],
+    "example": "sudo apt update",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "su",
+    "description": "다른 사용자 계정으로 전환하거나 관리자 권한으로 로그인하는 명령어",
+    "usage": "su [사용자계정]",
+    "options": [
+      "- (환경변수까지 해당 사용자의 것으로 완전 전환)"
+    ],
+    "example": "su -",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "passwd",
+    "description": "사용자 계정의 비밀번호를 변경하는 명령어",
+    "usage": "passwd [사용자명]",
+    "options": [],
+    "example": "passwd",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "ping",
+    "description": "원격 호스트와의 네트워크 연결 상태 및 응답 속도(latency)를 확인하는 명령어",
+    "usage": "ping [옵션] [IP주소 또는 도메인]",
+    "options": [
+      "-c [횟수] (보낼 패킷 수 지정)"
+    ],
+    "example": "ping -c 4 google.com",
+    "category": "네트워크"
+  },
+  {
+    "name": "curl",
+    "description": "서버와 데이터를 주고받는 명령어로, 웹 페이지 소스를 가져오거나 API를 테스트할 때 사용",
+    "usage": "curl [옵션] [URL]",
+    "options": [
+      "-O (원격 파일 이름 그대로 다운로드)",
+      "-I (HTTP 헤더 정보만 출력)"
+    ],
+    "example": "curl -O https://example.com/file.zip",
+    "category": "네트워크"
+  },
+  {
+    "name": "wget",
+    "description": "웹 상의 파일을 백그라운드에서 간편하게 다운로드하는 명령어",
+    "usage": "wget [옵션] [URL]",
+    "options": [
+      "-P [경로] (저장할 디렉터리 지정)"
+    ],
+    "example": "wget https://example.com/archive.tar.gz",
+    "category": "네트워크"
+  },
+  {
+    "name": "netstat",
+    "description": "네트워크 연결 상태, 열린 포트, 라우팅 테이블 등을 확인하는 명령어",
+    "usage": "netstat [옵션]",
+    "options": [
+      "-tulnp (LISTEN 상태인 포트와 프로세스 이름 출력)"
+    ],
+    "example": "netstat -tulnp",
+    "category": "네트워크"
+  },
+  {
+    "name": "ss",
+    "description": "netstat의 현대적 대안으로 소켓 통계 정보를 더 빠르게 조회하는 명령어",
+    "usage": "ss [옵션]",
+    "options": [
+      "-t (TCP 소켓 표시)",
+      "-l (LISTEN 포트 표시)"
+    ],
+    "example": "ss -tulpn",
+    "category": "네트워크"
+  },
+  {
+    "name": "ifconfig",
+    "description": "네트워크 인터페이스의 IP 주소, MAC 주소 등을 확인하거나 설정하는 명령어",
+    "usage": "ifconfig [인터페이스명]",
+    "options": [],
+    "example": "ifconfig",
+    "category": "네트워크"
+  },
+  {
+    "name": "ip",
+    "description": "ifconfig의 최신 대체 명령어로 네트워크 장치 및 라우팅을 관리하는 도구",
+    "usage": "ip [옵션] [객체] [명령]",
+    "options": [
+      "addr (IP 주소 확인 및 설정)"
+    ],
+    "example": "ip addr show",
+    "category": "네트워크"
+  },
+  {
+    "name": "ssh",
+    "description": "암호화된 원격 접속 프로토콜을 이용해 다른 리눅스 서버에 접속하는 명령어",
+    "usage": "ssh [사용자]@[호스트IP]",
+    "options": [
+      "-p [포트번호] (포트 지정 접속)"
+    ],
+    "example": "ssh -p 22 ubuntu@192.168.1.50",
+    "category": "네트워크"
+  },
+  {
+    "name": "scp",
+    "description": "SSH 보안 연결을 통해 로컬과 원격 서버 간에 파일을 안전하게 복사하는 명령어",
+    "usage": "scp [옵션] [원본] [대상]",
+    "options": [
+      "-P [포트] (포트지정)",
+      "-r (디렉터리 복사)"
+    ],
+    "example": "scp file.txt user@remote:/home/user/",
+    "category": "네트워크"
+  },
+  {
+    "name": "tar",
+    "description": "여러 개의 파일을 하나의 아카이브 파일로 묶거나 압축을 해제하는 명령어",
+    "usage": "tar [옵션] [파일명.tar] [대상]",
+    "options": [
+      "-cvf (아카이브 생성)",
+      "-xvf (아카이브 해제)",
+      "-z (gzip 압축 동시 적용)"
+    ],
+    "example": "tar -zxvf archive.tar.gz",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "gzip",
+    "description": "파일을 압축하거나(.gz) 압축을 해제하는 명령어",
+    "usage": "gzip [옵션] [파일명]",
+    "options": [
+      "-d (압축 해제)"
+    ],
+    "example": "gzip file.txt",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "unzip",
+    "description": "ZIP 형식으로 압축된 파일을 해제하는 명령어",
+    "usage": "unzip [압축파일.zip]",
+    "options": [
+      "-d [경로] (특정 폴더에 압축 해제)"
+    ],
+    "example": "unzip archive.zip -d ./target",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "history",
+    "description": "사용자가 이전에 입력했던 명령어들의 기록을 조회하는 명령어",
+    "usage": "history",
+    "options": [],
+    "example": "history",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "uname",
+    "description": "현재 운영체제(OS)의 커널 버전과 시스템 정보를 확인하는 명령어",
+    "usage": "uname [옵션]",
+    "options": [
+      "-a (모든 시스템 정보 출력)",
+      "-r (커널 버전 출력)"
+    ],
+    "example": "uname -a",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "hostname",
+    "description": "시스템의 호스트 이름(컴퓨터 이름)을 확인하거나 변경하는 명령어",
+    "usage": "hostname [옵션]",
+    "options": [
+      "-I (현재 서버의 IP 주소 출력)"
+    ],
+    "example": "hostname",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "date",
+    "description": "시스템의 현재 날짜와 시간을 확인하거나 변경하는 명령어",
+    "usage": "date [옵션]",
+    "options": [
+      "+\"%Y-%m-%d %H:%M:%S\" (원하는 포맷으로 출력)"
+    ],
+    "example": "date",
+    "category": "시스템 관리 및 정보"
+  },
+  {
+    "name": "echo",
+    "description": "터미널 화면에 문자열이나 환경변수 값을 출력하는 명령어",
+    "usage": "echo [문자열/변수]",
+    "options": [],
+    "example": "echo $PATH",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "export",
+    "description": "새로운 환경 변수를 설정하거나 기존 변수를 내보내는 명령어",
+    "usage": "export [변수명]=[값]",
+    "options": [],
+    "example": "export JAVA_HOME=/usr/lib/jvm/java",
+    "category": "시스템 관리 및 정보"
+  }
+]

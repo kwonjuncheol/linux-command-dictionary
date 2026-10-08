@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -118,7 +117,7 @@
             font-size: 14px;
             color: #cccccc;
             line-height: 1.4;
-            flex-grow: 1; 
+            flex-grow: 1;
             margin-bottom: 20px;
         }
 
@@ -156,6 +155,56 @@
             font-size: 12px;
             border: 1px solid #555;
         }
+
+        /* 목록(리스트) 형태 레이아웃 스타일 */
+        .commandListContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .commandListItem {
+            background-color: #2b2b2b;
+            border: 1px solid #555;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #eeeeee;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .commandListItem .item-left {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            flex: 1;
+        }
+
+        .commandListItem h3 {
+            margin: 0;
+            color: #6DBE66;
+            font-size: 18px;
+            min-width: 100px;
+        }
+
+        .commandListItem p {
+            margin: 0;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        .commandListItem .item-category {
+            background-color: #383838;
+            color: #aaaaaa;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            border: 1px solid #555;
+            white-space: nowrap;
+        }
     </style>
 </head>
 
@@ -163,9 +212,9 @@
     <div class="container">
         <!-- 상단 메뉴 버튼들 -->
         <div class="topButtons">
-            <button class="categoryCommandsBtn">카테고리 별 명령어</button>
-            <button class="comPareCommandsBtn">명령어 비교하기</button>
-            <button class="allCommandsBtn">명령어 모두 보기 abc순</button>
+            <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
+            <button class="comPareCommandsBtn">명령어 비교</button>
+            <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
         </div>
 
         <!-- 검색창 -->
@@ -189,33 +238,30 @@
 
     <script>
         let allCommands = [];
+        let isListView = false; // false: 카드 뷰, true: 리스트 뷰
 
-        // 페이지가 열리면 commands.json 데이터를 불러옴
+        // commands.json 불러옴 일단은 dummy.json 파일로 해둠.
         window.addEventListener('DOMContentLoaded', () => {
-            fetch('commands.json')
+            fetch('dummy.json')
                 .then(response => response.json())
                 .then(data => {
                     allCommands = data;
-                    displayCommands(allCommands); // 처음에는 모든 커맨드 보여짐
+                    displayCommands(allCommands); // 처음에는 모든 커맨드(카드 형태)보여짐
                 })
                 .catch(error => console.error('JSON 로드 실패:', error));
         });
 
-        // 화면에 카드를 그려주는 함수
+        // 카드 형태로 보여주는 함수
         function displayCommands(commands) {
+            isListView = false;
             const container = document.getElementById('cardContainer');
-            container.innerHTML = ''; // 기존 내용 초기화
-
-            if (commands.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#aaa; grid-column: 1/-1;">해당하는 명령어가 없습니다.</p>';
-                return;
-            }
+            container.className = 'commandCardContainer';
+            container.innerHTML = '';
 
             commands.forEach(cmd => {
                 const card = document.createElement('div');
                 card.className = 'commandCard';
 
-                // options 배열이 존재할 경우 HTML 태그로 변환
                 let optionsHtml = '';
                 if (cmd.options && cmd.options.length > 0) {
                     const optionBadges = cmd.options.map(opt => `<span class="option-badge">${opt}</span>`).join('');
@@ -235,16 +281,76 @@
             });
         }
 
+        // 리스트로 보여주는 함수
+        function displayCommandList(commands) {
+            isListView = true;
+            const container = document.getElementById('cardContainer');
+            container.className = 'commandListContainer';
+            container.innerHTML = '';
+
+            commands.forEach(cmd => {
+                const item = document.createElement('div');
+                item.className = 'commandListItem';
+
+                item.innerHTML = `
+                    <div class="item-left">
+                        <h3>${cmd.name}</h3>
+                        <p>${cmd.description}</p>
+                    </div>
+                    <div class="item-category">${cmd.category || '기타'}</div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // 현재 뷰 상태에 따라 올바른 함수를 호출해주는 함수
+        function renderCurrentView(commands) {
+            if (isListView) {
+                displayCommandList(commands);
+            } else {
+                displayCommands(commands);
+            }
+        }
+
         // 카테고리 버튼 클릭 이벤트 연결
         const categoryButtons = document.querySelectorAll('.categoryBtn');
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedCategory = button.getAttribute('data-category');
-
-                // 선택한 카테고리와 일치하는 명령어만 필터링
                 const filtered = allCommands.filter(cmd => cmd.category === selectedCategory);
-                displayCommands(filtered);
+
+                // 현재 뷰 상태를 유지한 채 필터링된 결과 출력
+                renderCurrentView(filtered);
             });
+        });
+
+        // 실시간 검색창 입력 이벤트 연결
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const keyword = e.target.value.toLowerCase().trim();
+            const filtered = allCommands.filter(cmd =>
+                cmd.name.toLowerCase().includes(keyword) ||
+                cmd.description.toLowerCase().includes(keyword)
+            );
+
+            // 검색할 때도 현재 뷰 상태 유지
+            renderCurrentView(filtered);
+        });
+
+        // 카드 보기 버튼 클릭 이벤트 연결
+        const categoryCommandsBtn = document.getElementById('categoryCommandsBtn');
+        categoryCommandsBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            displayCommands(allCommands); // 강제로 카드 뷰로 전체 출력
+        });
+
+        // 목록 보기 버튼 클릭 이벤트 연결
+        const allCommandsBtn = document.getElementById('allCommandsBtn');
+        allCommandsBtn.addEventListener('click', () => {
+            const sortedCommands = [...allCommands].sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
+            displayCommandList(sortedCommands); // 리스트 뷰로 ABC순 출력
         });
     </script>
 </body>
