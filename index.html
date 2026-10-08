@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리눅스 명령어 사전</title>
+    <style>
+        body {
+            background-color: #888888;
+            color: #eeeeee;
+            padding: 40px;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        .topButtons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .topButtons button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #2b2b2b;
+            color: #ffffff;
+            border: 1px solid #555;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .topButtons button:first-child { margin-left: 0; }
+        .topButtons button:last-child { margin-right: 0; }
+
+        #searchInput {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #555;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            /* 너비 넘침 방지 */
+            margin-bottom: 20px;
+        }
+
+        .categoryCommandsBtn,
+        .comPareCommandsBtn,
+        .allCommandsBtn {
+            color: #ffffff;
+        }
+
+        .categoryContainer {
+            display: flex;
+            justify-content: space-between;
+            gap: 0;
+            margin-top: 15px;
+        }
+
+        .categoryBtn {
+            flex: 1;
+            margin: 0 4px;
+            background-color: #efefef;
+            color: #333333;
+            border: 1px solid #cccccc;
+            padding: 12px 10px;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .categoryBtn:first-child { margin-left: 0; }
+        
+        .categoryBtn:last-child { margin-right: 0; }
+        
+        .categoryBtn:hover {
+            background-color: #dddddd;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- 상단 메뉴 버튼들 -->
+        <div class="topButtons">
+            <button class="categoryCommandsBtn">카테고리 별 명령어</button>
+            <button class="comPareCommandsBtn">명령어 비교하기</button>
+            <button class="allCommandsBtn">명령어 모두 보기 abc순</button>
+        </div>
+
+        <!-- 검색창 -->
+
+        <div>
+            <input type="text" , id="searchInput" , placeholder="명령어 입력">
+        </div>
+
+        <!-- 검색창 아래의 카테고리 버튼들-->
+        <div class="categoryContainer">
+            <button class="categoryBtn">파일 및 디렉토리 관리</button>
+            <button class="categoryBtn">시스템 관리 및 정보</button>
+            <button class="categoryBtn">프로세스 관리</button>
+            <button class="categoryBtn">네트워크</button>
+            <button class="categoryBtn">권한 및 소유권</button>
+            <button class="categoryBtn">텍스트 처리</button>
+        </div>
+    </div>
+</body>
+
+</html>

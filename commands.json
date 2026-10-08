@@ -1,0 +1,26 @@
+[
+  {
+    "name": "ls",
+    "description": "현재 디렉터리의 파일이나 디렉터리 목록을 출력하는 명령어",
+    "usage": "ls [옵션] [디렉터리/파일]",
+    "options": ["-a (숨김 파일 포함)", "-l (상세 정보 출력)"],
+    "example": "ls -al",
+    "category": "파일 관리"
+  },
+  {
+    "name": "cd",
+    "description": "작업 중인 디렉터리 위치를 이동하는 명령어",
+    "usage": "cd [이동할 경로]",
+    "options": ["-P (심볼릭 링크가 아닌 물리적 경로로 이동)"],
+    "example": "cd /usr/local",
+    "category": "시스템 관리"
+  },
+  {
+    "name": "명령어 이름",
+    "description": "설명",
+    "usage": "사용법",
+    "options": ["옵션이2개 이상이면", "이런 식으로 나눠 적습니다."],
+    "example": "사용 예시",
+    "category": "분류"
+  }
+]
