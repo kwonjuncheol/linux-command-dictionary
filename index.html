@@ -13,8 +13,10 @@
         }
 
         .container {
-            width: 1200px;
+            width: 100%;
+            max-width: 1200px;
             margin: 0 auto;
+            box-sizing: border-box;
         }
 
         .topButtons {
@@ -36,8 +38,13 @@
             cursor: pointer;
         }
 
-        .topButtons button:first-child { margin-left: 0; }
-        .topButtons button:last-child { margin-right: 0; }
+        .topButtons button:first-child {
+            margin-left: 0;
+        }
+
+        .topButtons button:last-child {
+            margin-right: 0;
+        }
 
         #searchInput {
             width: 100%;
@@ -47,7 +54,6 @@
             border: 1px solid #555;
             background-color: #f9f9f9;
             box-sizing: border-box;
-            /* 너비 넘침 방지 */
             margin-bottom: 20px;
         }
 
@@ -66,7 +72,7 @@
 
         .categoryBtn {
             flex: 1;
-            margin: 0 4px;
+            margin: 0 8px;
             background-color: #efefef;
             color: #333333;
             border: 1px solid #cccccc;
@@ -76,14 +82,79 @@
             border-radius: 6px;
             cursor: pointer;
         }
-        
-        .categoryBtn:first-child { margin-left: 0; }
-        
-        .categoryBtn:last-child { margin-right: 0; }
-        
+
+        .categoryBtn:first-child {
+            margin-left: 0;
+        }
+
+        .categoryBtn:last-child {
+            margin-right: 0;
+        }
+
         .categoryBtn:hover {
             background-color: #dddddd;
             cursor: pointer;
+        }
+
+        .commandCardContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .commandCard {
+            background-color: #2b2b2b;
+            border: 1px solid #555;
+            border-radius: 10px;
+            padding: 20px;
+            color: #eeeeee;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .commandCard p {
+            font-size: 14px;
+            color: #cccccc;
+            line-height: 1.4;
+            flex-grow: 1; 
+            margin-bottom: 20px;
+        }
+
+        .commandCard h3 {
+            margin-top: 0;
+            color: #6DBE66;
+            /* 포인트 색상 */
+            font-size: 20px;
+            border-bottom: 1px solid #444;
+            padding-bottom: 8px;
+        }
+
+        .commandCard .usage-box {
+            background-color: #1e1e1e;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 13px;
+            margin-top: 10px;
+            color: #a6e22e;
+        }
+
+        .commandCard .options-container {
+            margin-top: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .commandCard .option-badge {
+            background-color: #383838;
+            color: #6DBE66;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid #555;
         }
     </style>
 </head>
@@ -98,21 +169,84 @@
         </div>
 
         <!-- 검색창 -->
-
         <div>
             <input type="text" , id="searchInput" , placeholder="명령어 입력">
         </div>
 
-        <!-- 검색창 아래의 카테고리 버튼들-->
+        <!-- 검색창 아래의 카테고리 버튼을 누르면 해당하는 카테고리의 명령어들이 나옴-->
         <div class="categoryContainer">
-            <button class="categoryBtn">파일 및 디렉토리 관리</button>
-            <button class="categoryBtn">시스템 관리 및 정보</button>
-            <button class="categoryBtn">프로세스 관리</button>
-            <button class="categoryBtn">네트워크</button>
-            <button class="categoryBtn">권한 및 소유권</button>
-            <button class="categoryBtn">텍스트 처리</button>
+            <button class="categoryBtn" data-category="파일 및 디렉토리 관리">파일 및 디렉토리 관리</button>
+            <button class="categoryBtn" data-category="시스템 관리 및 정보">시스템 관리 및 정보</button>
+            <button class="categoryBtn" data-category="프로세스 관리">프로세스 관리</button>
+            <button class="categoryBtn" data-category="네트워크">네트워크</button>
+            <button class="categoryBtn" data-category="권한 및 소유권">권한 및 소유권</button>
+            <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
         </div>
+
+        <!-- 해당 카데고리의 명령어가 나열된 컨테이너 -->
+        <div id="cardContainer" class="commandCardContainer"></div>
     </div>
+
+    <script>
+        let allCommands = [];
+
+        // 페이지가 열리면 commands.json 데이터를 불러옴
+        window.addEventListener('DOMContentLoaded', () => {
+            fetch('commands.json')
+                .then(response => response.json())
+                .then(data => {
+                    allCommands = data;
+                    displayCommands(allCommands); // 처음에는 모든 커맨드 보여짐
+                })
+                .catch(error => console.error('JSON 로드 실패:', error));
+        });
+
+        // 화면에 카드를 그려주는 함수
+        function displayCommands(commands) {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = ''; // 기존 내용 초기화
+
+            if (commands.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#aaa; grid-column: 1/-1;">해당하는 명령어가 없습니다.</p>';
+                return;
+            }
+
+            commands.forEach(cmd => {
+                const card = document.createElement('div');
+                card.className = 'commandCard';
+
+                // options 배열이 존재할 경우 HTML 태그로 변환
+                let optionsHtml = '';
+                if (cmd.options && cmd.options.length > 0) {
+                    const optionBadges = cmd.options.map(opt => `<span class="option-badge">${opt}</span>`).join('');
+                    optionsHtml = `
+                        <div style="margin-top: 10px; font-size: 13px; color: #bbb;">주요 옵션:</div>
+                        <div class="options-container">${optionBadges}</div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <h3>${cmd.name}</h3>
+                    <p>${cmd.description}</p>
+                    <div class="usage-box">사용법: ${cmd.usage}</div>
+                    ${optionsHtml}
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // 카테고리 버튼 클릭 이벤트 연결
+        const categoryButtons = document.querySelectorAll('.categoryBtn');
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedCategory = button.getAttribute('data-category');
+
+                // 선택한 카테고리와 일치하는 명령어만 필터링
+                const filtered = allCommands.filter(cmd => cmd.category === selectedCategory);
+                displayCommands(filtered);
+            });
+        });
+    </script>
 </body>
 
 </html>
