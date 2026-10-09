@@ -1,153 +1,344 @@
 [
   {
-    "name": "ls",
-    "description": "현재 디렉터리의 파일이나 디렉터리 목록을 출력하는 명령어",
-    "usage": "ls [옵션] [디렉터리/파일]",
-    "options": [
-      "-a (숨김 파일 포함)",
-      "-l (상세 정보 출력)"
-    ],
-    "example": "ls -al",
-    "category": "파일 및 디렉토리 관리"
-  },
-  {
-    "name": "cd",
-    "description": "작업 중인 디렉터리 위치를 이동하는 명령어",
-    "usage": "cd [이동할 경로]",
-    "options": [
-      "-P (심볼릭 링크가 아닌 물리적 경로로 이동)"
-    ],
-    "example": "cd /usr/local",
-    "category": "시스템 관리 및 정보"
-  },
-  {
-    "name": "pwd",
-    "description": "현재 작업 중인 디렉터리의 절대 경로를 출력하는 명령어",
-    "options": [
-      "-P (실제 물리적 경로 출력)"
-    ],
-    "example": "pwd",
-    "category": "파일 및 디렉토리 관리"
-  },
-  {
-    "name": "mv",
-    "description": "파일이나 디렉터리를 이동하거나 이름을 변경하는 명령어",
-    "usage": "mv [옵션] [원본] [대상]",
-    "options": [
-      "-f (덮어쓰기 여부 묻지 않음)",
-      "-i (덮어쓰기 시 경고 확인)"
-    ],
-    "example": "mv old_name.txt new_name.txt",
-    "category": "파일 및 디렉토리 관리"
-  },
-  {
-    "name": "rm",
-    "description": "파일이나 디렉터리를 삭제하는 명령어",
-    "usage": "rm [옵션] [파일/디렉터리]",
-    "options": [
-      "-r (하위 디렉터리 포함 삭제)",
-      "-f (강제 삭제)"
-    ],
-    "example": "rm -rf temp_folder",
-    "category": "파일 및 디렉토리 관리"
+    "name": "bash",
+    "description": "Bash가 파일을 읽어 실행합니다. 파일 자체의 실행 권한은 불필요하지만 읽기 권한은 필요합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "bash hello.sh",
+    "options": []
   },
   {
     "name": "cat",
-    "description": "파일의 내용을 화면에 출력하거나 파일을 합치는 명령어",
+    "description": "문자로 구성된 파일의 내용을 출력하는 명령어",
+    "category": "텍스트 처리",
     "usage": "cat [옵션] [파일명]",
     "options": [
-      "-n (행 번호 출력)"
-    ],
-    "example": "cat -n text.txt",
-    "category": "텍스트 처리"
+      "-n (줄 번호 표시)"
+    ]
   },
   {
-    "name": "tail",
-    "description": "파일의 뒷부분 일부를 출력하는 명령어 (로그 실시간 모니터링에 유용)",
-    "usage": "tail [옵션] [파일명]",
+    "name": "cd",
+    "description": "디렉터리를 이동하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "cd[디렉터리명]",
     "options": [
-      "-f (파일 변경 내용을 실시간으로 출력)",
-      "-n [숫자] (지정한 줄 수 출력)"
-    ],
-    "example": "tail -f /var/log/syslog",
-    "category": "텍스트 처리"
-  },
-  {
-    "name": "top",
-    "description": "리눅스 시스템의 실시간 프로세스 자원 사용 상태를 모니터링하는 명령어",
-    "usage": "top",
-    "options": [],
-    "example": "top",
-    "category": "프로세스 관리"
-  },
-  {
-    "name": "ps",
-    "description": "현재 실행 중인 프로세스의 목록을 스냅샷 형태로 출력하는 명령어",
-    "usage": "ps [옵션]",
-    "options": [
-      "-ef (모든 프로세스 상세 출력)",
-      "aux (BSD 스타일 상세 출력)"
-    ],
-    "example": "ps -ef | grep java",
-    "category": "프로세스 관리"
-  },
-  {
-    "name": "ifconfig",
-    "description": "네트워크 인터페이스의 IP 주소, MAC 주소 등을 확인하거나 설정하는 명령어",
-    "usage": "ifconfig [인터페이스명]",
-    "options": [],
-    "example": "ifconfig",
-    "category": "네트워크"
-  },
-  {
-    "name": "ip",
-    "description": "ifconfig의 최신 대체 명령어로 네트워크 장치 및 라우팅을 관리하는 도구",
-    "usage": "ip [옵션] [객체] [명령]",
-    "options": [
-      "addr (IP 주소 확인 및 설정)"
-    ],
-    "example": "ip addr show",
-    "category": "네트워크"
+      "~ (사용자의 홈 디렉터리)",
+      ".. (상위 디렉터리)",
+      ". (현재 디렉터리)",
+      "$HOME (사용자의 홈 디렉터리)"
+    ]
   },
   {
     "name": "chmod",
-    "description": "파일이나 디렉터리의 접근 권한(Permission)을 변경하는 명령어",
-    "usage": "chmod [옵션] [권한값] [파일명]",
+    "description": "실행 권한을 추가합니다.",
+    "category": "권한 및 소유권",
+    "usage": "chmod +x [hello.sh]",
     "options": [
-      "-R (하위 파일까지 재귀적으로 권한 변경)"
-    ],
-    "example": "chmod 755 script.sh",
-    "category": "권한 및 소유권"
+      "+x (실행 권한 추가)"
+    ]
   },
   {
-    "name": "chown",
-    "description": "파일이나 디렉터리의 소유자(Owner) 및 그룹(Group)을 변경하는 명령어",
-    "usage": "chown [옵션] [소유자:그룹] [파일명]",
+    "name": "cp",
+    "description": "파일과 디렉터리를 복사하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "cp [옵션] [원본 파일명] [복사본 파일명]",
     "options": [
-      "-R (하위 항목 모두 변경)"
-    ],
-    "example": "chown -R user:root /var/www",
-    "category": "권한 및 소유권"
+      "-r (디렉터리를 포함해 복사)",
+      "-i (덮어쓰기 전 사용자에게 확인)"
+    ]
   },
   {
-    "name": "hostname",
-    "description": "시스템의 호스트 이름(컴퓨터 이름)을 확인하거나 변경하는 명령어",
-    "usage": "hostname [옵션]",
+    "name": "date",
+    "description": "날짜와 시간을 출력합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "date +%Y-%m-%d",
     "options": [
-      "-I (현재 서버의 IP 주소 출력)"
-    ],
-    "example": "hostname",
-    "category": "시스템 관리 및 정보"
+      "%Y (네 자리 연도)",
+      "%m (두 자리 월)",
+      "%d (두 자리 일)"
+    ]
   },
   {
-    "name": "명령어 이름",
-    "description": "설명",
-    "usage": "사용법",
+    "name": "du",
+    "description": "파일이나 폴더의 디스크 사용량을 확인하는 명령어",
+    "category": "시스템 관리 및 정보",
+    "usage": "du [옵션] [경로]",
     "options": [
-      "옵션이2개 이상이면",
-      "이런 식으로 나눠 적습니다."
-    ],
-    "example": "사용 예시",
-    "category": "파일 및 디렉토리 관리, 시스템 관리 및 정보,프로세스 관리, 네트워크, 권한 및 소유권, 텍스트 처리 중에 하나를 적습니다. 큰따옴표 필수!!"
+      "-s (대상의 합계만 출력)",
+      "-h (K, M, G 등 읽기 쉬운 단위로 출력)"
+    ]
+  },
+  {
+    "name": "echo",
+    "description": "전달받은 내용을 화면에 출력합니다.",
+    "category": "텍스트 처리",
+    "usage": "echo \"문자열\"",
+    "options": []
+  },
+  {
+    "name": "env",
+    "description": "인자 없이 실행하면 환경 변수 목록을 출력합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "env",
+    "options": []
+  },
+  {
+    "name": "export",
+    "description": "변수를 자식 프로세스에 전달하도록 등록합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "export 변수명=값",
+    "options": []
+  },
+  {
+    "name": "grep",
+    "description": "입력에서 조건에 맞는 줄을 찾습니다.",
+    "category": "텍스트 처리",
+    "usage": "grep 변수명",
+    "options": []
+  },
+  {
+    "name": "head",
+    "description": "전체 문서에서 일부만 보고 싶은 경우 사용하는 명령어",
+    "category": "텍스트 처리",
+    "usage": "head [옵션] [파일명]",
+    "options": [
+      "-c (특정 바이트만 출력)",
+      "-n (특정 줄 수만 출력)"
+    ]
+  },
+  {
+    "name": "history",
+    "description": "파이프라인 연동 예시에 사용된 명령어",
+    "category": "시스템 관리 및 정보",
+    "usage": "history | sort | less",
+    "options": []
+  },
+  {
+    "name": "kill",
+    "description": "특정 프로세스에게 종료 신호(sigterm)를 전달하는 명령어",
+    "category": "프로세스 관리",
+    "usage": "kill [옵션] PID",
+    "options": [
+      "-15 (정상 종료 / SIGTERM)",
+      "-9 (강제 종료 / SIGKILL)",
+      "-19 (일시 정지 / SIGSTOP)",
+      "-18 (다시 시작 / SIGCONT)"
+    ]
+  },
+  {
+    "name": "less",
+    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (검색 편의성이 있음)",
+    "category": "텍스트 처리",
+    "usage": "less [옵션] [파일명]",
+    "options": []
+  },
+  {
+    "name": "ls",
+    "description": "현재 디렉터리의 파일이나 디렉터리 목록을 출력하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "ls [옵션] [경로]",
+    "options": [
+      "-l (자세한 정보 출력)",
+      "-a (숨겨진 파일까지 출력)",
+      "-R (하위 디렉터리까지 포함 출력)"
+    ]
+  },
+  {
+    "name": "mkdir",
+    "description": "디렉터리 생성하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "mkdir [옵션] [디렉터리명]",
+    "options": [
+      "-p (경로상에 있는 존재하지 않는 디렉터리도 함께 생성)"
+    ]
+  },
+  {
+    "name": "more",
+    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (줄 번호 표시)",
+    "category": "텍스트 처리",
+    "usage": "more [옵션] [파일명]",
+    "options": []
+  },
+  {
+    "name": "mv",
+    "description": "파일이나 디렉터리를 다른 위치로 이동하거나 이름을 변경하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "mv [옵션] [변경 전 파일/디렉터리명] [변경 후 파일/디렉터리명]",
+    "options": []
+  },
+  {
+    "name": "nano",
+    "description": "간단한 사용법과 단축키로 입문자가 쉽게 문서를 편집할 때 사용하는 텍스트 편집기",
+    "category": "텍스트 처리",
+    "usage": "nano [파일명]",
+    "options": [
+      "Ctrl + T (명령어 실행)",
+      "Ctrl + W (특정 문자 검색)",
+      "Ctrl + K (문자열 잘라내기)",
+      "Ctrl + U (잘라낸 문자열 붙여넣기)",
+      "Ctrl + O (문서 저장)",
+      "Ctrl + X (편집기 종료)"
+    ]
+  },
+  {
+    "name": "pgrep",
+    "description": "프로세스의 이름으로 프로세스의 정보를 확인하는 명령어",
+    "category": "프로세스 관리",
+    "usage": "pgrep [프로세스명]",
+    "options": []
+  },
+  {
+    "name": "printenv",
+    "description": "환경 변수 목록을 출력합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "printenv [변수명]",
+    "options": []
+  },
+  {
+    "name": "ps",
+    "description": "현재 실행 중인 프로세스의 목록을 확인하는 명령어",
+    "category": "프로세스 관리",
+    "usage": "ps [옵션]",
+    "options": [
+      "-e (모든 프로세스에 대한 정보 출력)",
+      "-f (자세한 정보 출력)"
+    ]
+  },
+  {
+    "name": "pwd",
+    "description": "현재 작업 중인 디렉터리를 출력하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "pwd",
+    "options": []
+  },
+  {
+    "name": "rm",
+    "description": "존재하는 파일을 삭제하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "rm [옵션] [파일명]",
+    "options": [
+      "-i (삭제 여부를 물음)",
+      "-r (디렉터리 포함 삭제)"
+    ]
+  },
+  {
+    "name": "rmdir",
+    "description": "디렉터리를 삭제하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "rmdir [옵션] [디렉터리명]",
+    "options": [
+      "-p (경로상에 있는 빈 디렉터리도 함께 삭제)"
+    ]
+  },
+  {
+    "name": "set",
+    "description": "현재 셸의 변수 등을 출력합니다. Bash에서는 함수도 포함합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "set",
+    "options": []
+  },
+  {
+    "name": "sleep",
+    "description": "프로세스를 대기시키는 명령어 예시로 사용됨",
+    "category": "프로세스 관리",
+    "usage": "sleep [초]",
+    "options": []
+  },
+  {
+    "name": "sort",
+    "description": "파이프라인 예시에서 정렬 기능으로 사용된 명령어",
+    "category": "텍스트 처리",
+    "usage": "sort",
+    "options": []
+  },
+  {
+    "name": "source",
+    "description": "파일 안 명령어를 현재 셸에서 실행해 설정을 적용합니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "source ~/.bashrc",
+    "options": []
+  },
+  {
+    "name": "stat",
+    "description": "파일의 정보 출력",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "stat [파일명]",
+    "options": []
+  },
+  {
+    "name": "tail",
+    "description": "전체 문서에서 일부만 보고 싶은 경우 사용하는 명령어",
+    "category": "텍스트 처리",
+    "usage": "tail [옵션] [파일명]",
+    "options": [
+      "-c (특정 바이트만 출력)",
+      "-n (특정 줄 수만 출력)"
+    ]
+  },
+  {
+    "name": "top",
+    "description": "실시간으로 프로세스의 정보를 모니터링할 수 있는 명령어",
+    "category": "프로세스 관리",
+    "usage": "top [옵션]",
+    "options": [
+      "-d (새로고침 주기(초))"
+    ]
+  },
+  {
+    "name": "touch",
+    "description": "(해당하는 파일이 없으면) 빈 파일을 생성하는 명령어 / (파일의) 시간 변경 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "touch [옵션] [파일명]",
+    "options": [
+      "-a (접근 시간 변경)",
+      "-m (수정 시간 변경)",
+      "-t (특정 시간으로 변경)"
+    ]
+  },
+  {
+    "name": "unset",
+    "description": "변수를 삭제합니다. 변수명 앞에 $를 붙이지 않습니다.",
+    "category": "시스템 관리 및 정보",
+    "usage": "unset 변수명",
+    "options": []
+  },
+  {
+    "name": "vi",
+    "description": "설치 없이 사용할 수 있는 리눅스에 내장된 기본 텍스트 편집기",
+    "category": "텍스트 처리",
+    "usage": "vi [파일명]",
+    "options": [
+      "i, I, a, A, o, O (입력 모드 전환)",
+      ":w (편집 중인 문서 저장)",
+      ":q (종료)",
+      ":q! (저장하지 않고 종료)",
+      ":wq (저장하고 종료)"
+    ]
+  },
+  {
+    "name": "vim",
+    "description": "개선된 vi로 언어에 따른 코드 하이라이팅 등 다양한 고급 기능 제공",
+    "category": "텍스트 처리",
+    "usage": "vim [파일명]",
+    "options": []
+  },
+  {
+    "name": "vimtutor",
+    "description": "vim 편집기에서 자주 사용하는 기능을 따라하기 실습을 통해 익숙해 질 수 있는 기능",
+    "category": "텍스트 처리",
+    "usage": "vimtutor –g ko",
+    "options": [
+      "-g ko (한국어 실습)"
+    ]
+  },
+  {
+    "name": "wc",
+    "description": "줄, 단어, 바이트 개수를 출력하는 명령어",
+    "category": "텍스트 처리",
+    "usage": "wc [옵션]",
+    "options": [
+      "-l (줄(line) 개수 출력)",
+      "-w (단어(word) 개수 출력)",
+      "-c (바이트(byte) 개수 출력)"
+    ]
   }
 ]
