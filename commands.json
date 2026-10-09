@@ -21,6 +21,125 @@
     "category": "시스템 관리 및 정보"
   },
   {
+    "name": "pwd",
+    "description": "현재 작업 중인 디렉터리의 절대 경로를 출력하는 명령어",
+    "options": [
+      "-P (실제 물리적 경로 출력)"
+    ],
+    "example": "pwd",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "mv",
+    "description": "파일이나 디렉터리를 이동하거나 이름을 변경하는 명령어",
+    "usage": "mv [옵션] [원본] [대상]",
+    "options": [
+      "-f (덮어쓰기 여부 묻지 않음)",
+      "-i (덮어쓰기 시 경고 확인)"
+    ],
+    "example": "mv old_name.txt new_name.txt",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "rm",
+    "description": "파일이나 디렉터리를 삭제하는 명령어",
+    "usage": "rm [옵션] [파일/디렉터리]",
+    "options": [
+      "-r (하위 디렉터리 포함 삭제)",
+      "-f (강제 삭제)"
+    ],
+    "example": "rm -rf temp_folder",
+    "category": "파일 및 디렉토리 관리"
+  },
+  {
+    "name": "cat",
+    "description": "파일의 내용을 화면에 출력하거나 파일을 합치는 명령어",
+    "usage": "cat [옵션] [파일명]",
+    "options": [
+      "-n (행 번호 출력)"
+    ],
+    "example": "cat -n text.txt",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "tail",
+    "description": "파일의 뒷부분 일부를 출력하는 명령어 (로그 실시간 모니터링에 유용)",
+    "usage": "tail [옵션] [파일명]",
+    "options": [
+      "-f (파일 변경 내용을 실시간으로 출력)",
+      "-n [숫자] (지정한 줄 수 출력)"
+    ],
+    "example": "tail -f /var/log/syslog",
+    "category": "텍스트 처리"
+  },
+  {
+    "name": "top",
+    "description": "리눅스 시스템의 실시간 프로세스 자원 사용 상태를 모니터링하는 명령어",
+    "usage": "top",
+    "options": [],
+    "example": "top",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "ps",
+    "description": "현재 실행 중인 프로세스의 목록을 스냅샷 형태로 출력하는 명령어",
+    "usage": "ps [옵션]",
+    "options": [
+      "-ef (모든 프로세스 상세 출력)",
+      "aux (BSD 스타일 상세 출력)"
+    ],
+    "example": "ps -ef | grep java",
+    "category": "프로세스 관리"
+  },
+  {
+    "name": "ifconfig",
+    "description": "네트워크 인터페이스의 IP 주소, MAC 주소 등을 확인하거나 설정하는 명령어",
+    "usage": "ifconfig [인터페이스명]",
+    "options": [],
+    "example": "ifconfig",
+    "category": "네트워크"
+  },
+  {
+    "name": "ip",
+    "description": "ifconfig의 최신 대체 명령어로 네트워크 장치 및 라우팅을 관리하는 도구",
+    "usage": "ip [옵션] [객체] [명령]",
+    "options": [
+      "addr (IP 주소 확인 및 설정)"
+    ],
+    "example": "ip addr show",
+    "category": "네트워크"
+  },
+  {
+    "name": "chmod",
+    "description": "파일이나 디렉터리의 접근 권한(Permission)을 변경하는 명령어",
+    "usage": "chmod [옵션] [권한값] [파일명]",
+    "options": [
+      "-R (하위 파일까지 재귀적으로 권한 변경)"
+    ],
+    "example": "chmod 755 script.sh",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "chown",
+    "description": "파일이나 디렉터리의 소유자(Owner) 및 그룹(Group)을 변경하는 명령어",
+    "usage": "chown [옵션] [소유자:그룹] [파일명]",
+    "options": [
+      "-R (하위 항목 모두 변경)"
+    ],
+    "example": "chown -R user:root /var/www",
+    "category": "권한 및 소유권"
+  },
+  {
+    "name": "hostname",
+    "description": "시스템의 호스트 이름(컴퓨터 이름)을 확인하거나 변경하는 명령어",
+    "usage": "hostname [옵션]",
+    "options": [
+      "-I (현재 서버의 IP 주소 출력)"
+    ],
+    "example": "hostname",
+    "category": "시스템 관리 및 정보"
+  },
+  {
     "name": "명령어 이름",
     "description": "설명",
     "usage": "사용법",

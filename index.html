@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,46 +21,52 @@
 
         .topButtons {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 30px;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
         .topButtons button {
             flex: 1;
-            margin: 0 5px;
-            padding: 14px 28px;
-            font-size: 16px;
+            /* 💡 추가됨: 버튼 3개가 공간을 큼직하게 나눠 가지며 크기가 약 2배로 쫙 늘어납니다 */
+            padding: 0 18px;
+            font-size: 14px;
             font-weight: bold;
             background-color: #2b2b2b;
             color: #ffffff;
             border: 1px solid #555;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
+            white-space: nowrap;
+            height: 42px;
+            box-sizing: border-box;
         }
 
-        .topButtons button:first-child {
-            margin-left: 0;
-        }
-
-        .topButtons button:last-child {
-            margin-right: 0;
+        .searchArea {
+            display: flex;
+            gap: 8px;
+            flex: 1.5;
         }
 
         #searchInput {
-            width: 100%;
-            padding: 16px 20px;
-            font-size: 18px;
-            border-radius: 8px;
+            flex: 1;
+            padding: 0 14px;
+            font-size: 14px;
+            border-radius: 6px;
             border: 1px solid #555;
             background-color: #f9f9f9;
+            color: #333;
             box-sizing: border-box;
-            margin-bottom: 20px;
+            height: 42px;
+            outline: none;
         }
 
-        .categoryCommandsBtn,
-        .comPareCommandsBtn,
-        .allCommandsBtn {
-            color: #ffffff;
+        #searchInput::placeholder {
+            color: #888;
+        }
+
+        .topButtons button:hover {
+            background-color: #3f3f3f;
         }
 
         .categoryContainer {
@@ -117,8 +124,8 @@
             font-size: 14px;
             color: #cccccc;
             line-height: 1.4;
-            flex-grow: 1;
-            margin-bottom: 20px;
+            flex-grow: 0;
+            margin-bottom: 15px;
         }
 
         .commandCard h3 {
@@ -136,7 +143,7 @@
             border-radius: 5px;
             font-family: monospace;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: auto;
             color: #a6e22e;
         }
 
@@ -156,7 +163,7 @@
             border: 1px solid #555;
         }
 
-        /* 목록(리스트) 형태 레이아웃 스타일 */
+        /* 목록으로 보기 스타일 */
         .commandListContainer {
             display: flex;
             flex-direction: column;
@@ -174,6 +181,12 @@
             align-items: center;
             justify-content: space-between;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .commandListItem:hover {
+            background-color: #383838;
         }
 
         .commandListItem .item-left {
@@ -205,21 +218,100 @@
             border: 1px solid #555;
             white-space: nowrap;
         }
+
+        /* 체크박스 추가*/
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .list-checkbox-wrapper {
+            margin-right: 15px;
+            margin-bottom: 0;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: #6DBE66;
+        }
+
+        /* 팝업(평소엔 보이지않고 명령어 클릭하면 나옴) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #2b2b2b;
+            border: 1px solid #555;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            border-bottom: 1px solid #444;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #6DBE66;
+            font-size: 22px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+        }
+
+        .modal-body {
+            display: flex;
+            gap: 20px;
+            padding: 25px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- 상단 메뉴 버튼들 -->
         <div class="topButtons">
             <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
-            <button class="comPareCommandsBtn">명령어 비교</button>
+            <button id="comPareCommandsBtn" class="comPareCommandsBtn">선택한 명령어 비교 (0/2)</button>
             <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
-        </div>
 
-        <!-- 검색창 -->
-        <div>
-            <input type="text" , id="searchInput" , placeholder="명령어 입력">
+            <div class="searchArea">
+                <input type="text" id="searchInput" placeholder="🔍 명령어 또는 설명 입력">
+            </div>
         </div>
 
         <!-- 검색창 아래의 카테고리 버튼을 누르면 해당하는 카테고리의 명령어들이 나옴-->
@@ -232,21 +324,65 @@
             <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
         </div>
 
-        <!-- 해당 카데고리의 명령어가 나열된 컨테이너 -->
+        <!-- 해당 카데고리 명령어 컨테이너 -->
         <div id="cardContainer" class="commandCardContainer"></div>
+    </div>
+
+    <!-- 비교하기 팝업 -->
+    <div id="compareModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🔍 명령어 비교</h2>
+                <button id="closeModalBtn" class="close-btn">&times;</button>
+            </div>
+            <div id="modalCompareBody" class="modal-body">
+            </div>
+        </div>
     </div>
 
     <script>
         let allCommands = [];
         let isListView = false; // false: 카드 뷰, true: 리스트 뷰
+        let selectedForCompare = []; // 비교하려고 체크박스에 선택된 명령어 저장
 
-        // commands.json 불러옴 일단은 dummy.json 파일로 해둠.
+        // 체크박스 HTML을 생성해주는 공통 함수
+        function getCheckboxHtml(cmdName, isList = false) {
+            const isChecked = selectedForCompare.includes(cmdName) ? 'checked' : '';
+            const wrapperClass = isList ? 'checkbox-wrapper list-checkbox-wrapper' : 'checkbox-wrapper';
+            return `
+                <div class="${wrapperClass}">
+                    <input type="checkbox" id="chk_${cmdName}" value="${cmdName}" 
+                           onchange="handleCheckboxChange(this)" ${isChecked}>
+                    <label for="chk_${cmdName}" style="cursor:pointer;">비교 선택</label>
+                </div>
+            `;
+        }
+
+        // 체크박스 클릭 시 작동하는 함수
+        window.handleCheckboxChange = function (checkboxElement) {
+            const cmdName = checkboxElement.value;
+
+            if (checkboxElement.checked) {
+                if (selectedForCompare.length >= 2) {
+                    alert("비교는 최대 2개까지만 선택할 수 있습니다. 기존 선택을 해제해주세요.");
+                    checkboxElement.checked = false;
+                    return;
+                }
+                selectedForCompare.push(cmdName);
+            } else {
+                selectedForCompare = selectedForCompare.filter(name => name !== cmdName);
+            }
+
+            document.getElementById('comPareCommandsBtn').innerText = `명령어 비교 (${selectedForCompare.length}/2)`;
+        };
+
+        // commands.json 불러오고 abc 순으로 정렬함.
         window.addEventListener('DOMContentLoaded', () => {
-            fetch('dummy.json')
+            fetch('commands.json')
                 .then(response => response.json())
                 .then(data => {
-                    allCommands = data;
-                    displayCommands(allCommands); // 처음에는 모든 커맨드(카드 형태)보여짐
+                    allCommands = data.sort((a, b) => a.name.localeCompare(b.name));
+                    displayCommands(allCommands); // 정렬된 커맨드(카드 형태) 표시
                 })
                 .catch(error => console.error('JSON 로드 실패:', error));
         });
@@ -272,6 +408,7 @@
                 }
 
                 card.innerHTML = `
+                ${getCheckboxHtml(cmd.name)}
                     <h3>${cmd.name}</h3>
                     <p>${cmd.description}</p>
                     <div class="usage-box">사용법: ${cmd.usage}</div>
@@ -291,11 +428,20 @@
             commands.forEach(cmd => {
                 const item = document.createElement('div');
                 item.className = 'commandListItem';
+                // 목록 행 클릭 시 상세 모달 오픈 (단, 체크박스 영역 클릭 시엔 팝업 안 뜸)
+                item.onclick = (e) => {
+                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
+                        openDetailModal(cmd.name);
+                    }
+                };
 
                 item.innerHTML = `
-                    <div class="item-left">
-                        <h3>${cmd.name}</h3>
-                        <p>${cmd.description}</p>
+                    <div style="display: flex; align-items: center; flex: 1;">
+                        ${getCheckboxHtml(cmd.name, true)}
+                        <div class="item-left" style="flex:1;">
+                            <h3>${cmd.name}</h3>
+                            <p>${cmd.description}</p>
+                        </div>
                     </div>
                     <div class="item-category">${cmd.category || '기타'}</div>
                 `;
@@ -317,7 +463,9 @@
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedCategory = button.getAttribute('data-category');
-                const filtered = allCommands.filter(cmd => cmd.category === selectedCategory);
+                const filtered = allCommands
+                    .filter(cmd => cmd.category === selectedCategory)
+                    .sort((a, b) => a.name.localeCompare(b.name)); // 카테고리 내부에서도 ABC 순 정렬
 
                 // 현재 뷰 상태를 유지한 채 필터링된 결과 출력
                 renderCurrentView(filtered);
@@ -337,21 +485,103 @@
             renderCurrentView(filtered);
         });
 
+
         // 카드 보기 버튼 클릭 이벤트 연결
         const categoryCommandsBtn = document.getElementById('categoryCommandsBtn');
         categoryCommandsBtn.addEventListener('click', () => {
             searchInput.value = '';
-            displayCommands(allCommands); // 강제로 카드 뷰로 전체 출력
+            isListView = false; // 명확하게 카드 뷰로 상태 변경
+            const sorted = [...allCommands].sort((a, b) => a.name.localeCompare(b.name));
+            displayCommands(sorted);
         });
 
         // 목록 보기 버튼 클릭 이벤트 연결
         const allCommandsBtn = document.getElementById('allCommandsBtn');
         allCommandsBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            isListView = true; // 명확하게 리스트 뷰로 상태 변경[cite: 7]
             const sortedCommands = [...allCommands].sort((a, b) =>
                 a.name.localeCompare(b.name)
             );
-            displayCommandList(sortedCommands); // 리스트 뷰로 ABC순 출력
+            displayCommandList(sortedCommands);
         });
+
+        // "명령어 비교" 버튼 클릭 시 팝업 띄우기
+        const compareModal = document.getElementById('compareModal');
+        const modalCompareBody = document.getElementById('modalCompareBody');
+
+        document.getElementById('comPareCommandsBtn').addEventListener('click', () => {
+            if (selectedForCompare.length === 0) {
+                alert("비교할 명령어를 체크박스로 먼저 선택해주세요. (최대 2개)");
+                return;
+            }
+
+            modalCompareBody.innerHTML = '';
+
+            selectedForCompare.forEach(cmdName => {
+                const cmd = allCommands.find(c => c.name === cmdName);
+                if (cmd) {
+                    let optionsHtml = '';
+                    if (cmd.options && cmd.options.length > 0) {
+                        const optionBadges = cmd.options.map(opt => `<span class="option-badge">${opt}</span>`).join('');
+                        optionsHtml = `
+                            <div style="margin-top: 15px; font-size: 13px; color: #bbb;">주요 옵션:</div>
+                            <div class="options-container">${optionBadges}</div>
+                        `;
+                    }
+
+                    modalCompareBody.innerHTML += `
+                        <div style="flex: 1; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; padding: 25px; color: #ccc;">
+                            <h3 style="color: #6DBE66; font-size: 24px; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px;">${cmd.name}</h3>
+                            <p style="font-size: 15px; line-height: 1.5; color: #eee;">${cmd.description}</p>
+                            <div style="font-size: 13px; color: #888; margin-top: 10px;">카테고리: <span style="color: #fff;">${cmd.category}</span></div>
+                            <div class="usage-box" style="margin-top: 20px; font-size: 15px;">사용법: ${cmd.usage}</div>
+                            ${optionsHtml}
+                        </div>
+                    `;
+                }
+            });
+
+            compareModal.style.display = 'flex';
+        });
+
+        // 팝업 닫기 기능
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            compareModal.style.display = 'none';
+        });
+
+        compareModal.addEventListener('click', (e) => {
+            if (e.target === compareModal) {
+                compareModal.style.display = 'none';
+            }
+        });
+
+        // 단일 명령어 상세 보기 팝업 함수
+        function openDetailModal(cmdName) {
+            const cmd = allCommands.find(c => c.name === cmdName);
+            if (!cmd) return;
+
+            let optionsHtml = '';
+            if (cmd.options && cmd.options.length > 0) {
+                const optionBadges = cmd.options.map(opt => `<span class="option-badge">${opt}</span>`).join('');
+                optionsHtml = `
+                    <div style="margin-top: 15px; font-size: 13px; color: #bbb;">주요 옵션:</div>
+                    <div class="options-container">${optionBadges}</div>
+                `;
+            }
+
+            modalCompareBody.innerHTML = `
+                <div style="flex: 1; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; padding: 25px; color: #ccc;">
+                    <h3 style="color: #6DBE66; font-size: 24px; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px;">${cmd.name} 상세 정보</h3>
+                    <p style="font-size: 15px; line-height: 1.5; color: #eee; margin-top: 15px;">${cmd.description}</p>
+                    <div style="font-size: 13px; color: #888; margin-top: 10px;">카테고리: <span style="color: #fff;">${cmd.category || '기타'}</span></div>
+                    <div class="usage-box" style="margin-top: 20px; font-size: 15px;">사용법: ${cmd.usage}</div>
+                    ${optionsHtml}
+                </div>
+            `;
+
+            compareModal.style.display = 'flex';
+        }
     </script>
 </body>
 
