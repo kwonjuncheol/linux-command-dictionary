@@ -9,7 +9,7 @@
         body {
             background-color: #888888;
             color: #eeeeee;
-            padding: 40px;
+            padding: 0 40px 40px 40px;
         }
 
         .container {
@@ -299,30 +299,48 @@
             padding: 25px;
             overflow-y: auto;
         }
+
+        .sticky-header {
+            position: sticky ;
+            top: 0px;
+            background-color: #888888;
+            /* 배경색과 똑같이 지정하여 스크롤 시 뒤 내용이 비치지 않음 */
+            padding-top: 40px;
+            /* 💡 상단 여백을 sticky 영역 내부로 가져옴 */
+            padding-bottom: 15px;
+            z-index: 100;
+            /* 카드나 리스트보다 위에 떠 있도록 설정 */
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <div class="topButtons">
-            <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
-            <button id="comPareCommandsBtn" class="comPareCommandsBtn">선택한 명령어 비교 (0/2)</button>
-            <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
+        <!-- 상단 고정 영역 -->
+        <div class="sticky-header">
+            <!-- 상단 첫째 줄: 버튼 3개 + 검색창 -->
+            <div class="topButtons">
+                <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
+                <button id="comPareCommandsBtn" class="comPareCommandsBtn">선택한 명령어 비교 (0/2)</button>
+                <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
 
-            <div class="searchArea">
-                <input type="text" id="searchInput" placeholder="🔍 명령어 또는 설명 입력">
+                <!-- 남은 공간을 채울 검색창 영역 -->
+                <div class="searchArea">
+                    <input type="text" id="searchInput" placeholder="🔍 명령어 또는 설명 입력">
+                </div>
+            </div>
+
+            <!-- 검색창 아래의 카테고리 버튼 -->
+            <div class="categoryContainer">
+                <button class="categoryBtn" data-category="파일 및 디렉토리 관리">파일 및 디렉토리 관리</button>
+                <button class="categoryBtn" data-category="시스템 관리 및 정보">시스템 관리 및 정보</button>
+                <button class="categoryBtn" data-category="프로세스 관리">프로세스 관리</button>
+                <button class="categoryBtn" data-category="네트워크">네트워크</button>
+                <button class="categoryBtn" data-category="권한 및 소유권">권한 및 소유권</button>
+                <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
             </div>
         </div>
-
-        <!-- 검색창 아래의 카테고리 버튼을 누르면 해당하는 카테고리의 명령어들이 나옴-->
-        <div class="categoryContainer">
-            <button class="categoryBtn" data-category="파일 및 디렉토리 관리">파일 및 디렉토리 관리</button>
-            <button class="categoryBtn" data-category="시스템 관리 및 정보">시스템 관리 및 정보</button>
-            <button class="categoryBtn" data-category="프로세스 관리">프로세스 관리</button>
-            <button class="categoryBtn" data-category="네트워크">네트워크</button>
-            <button class="categoryBtn" data-category="권한 및 소유권">권한 및 소유권</button>
-            <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
-        </div>
+        <!-- 상단 고정 영역 -->
 
         <!-- 해당 카데고리 명령어 컨테이너 -->
         <div id="cardContainer" class="commandCardContainer"></div>
