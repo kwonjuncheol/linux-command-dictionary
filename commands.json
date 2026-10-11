@@ -1,25 +1,41 @@
 [
   {
-    "name": "bash",
-    "description": "Bash가 파일을 읽어 실행합니다. 파일 자체의 실행 권한은 불필요하지만 읽기 권한은 필요합니다.",
+    "name": "apt",
+    "description": "우분투(Ubuntu) 등 데비안 계열 리눅스 패키지 관리 도구로, 소프트웨어를 설치하거나 업데이트하는 명령어",
     "category": "시스템 관리 및 정보",
-    "usage": "bash hello.sh",
+    "usage": "sudo apt install [패키지명]",
+    "options": [
+      "install (지정한 패키지 설치)"
+    ]
+  },
+  {
+    "name": "bash",
+    "description": "Bash 셸 스크립트 파일을 직접 읽어 실행하는 명령어 (파일의 자체 실행 권한이 불필요하지만 읽기 권한 필요)",
+    "category": "시스템 관리 및 정보",
+    "usage": "bash [스크립트 파일명]",
+    "options": []
+  },
+  {
+    "name": "bg",
+    "description": "현재 작업 중이거나 일시 정지(SIGSTOP)된 작업(Job)을 백그라운드 상태로 전환하여 실행하는 명령어",
+    "category": "프로세스 관리",
+    "usage": "bg [%작업번호]",
     "options": []
   },
   {
     "name": "cat",
-    "description": "문자로 구성된 파일의 내용을 출력하는 명령어",
+    "description": "문자로 구성된 파일의 내용을 화면에 출력하는 명령어",
     "category": "텍스트 처리",
     "usage": "cat [옵션] [파일명]",
     "options": [
-      "-n (줄 번호 표시)"
+      "-n (줄 번호 출력)"
     ]
   },
   {
     "name": "cd",
-    "description": "디렉터리를 이동하는 명령어",
+    "description": "현재 작업 중인 디렉터리를 이동하는 명령어",
     "category": "파일 및 디렉토리 관리",
-    "usage": "cd[디렉터리명]",
+    "usage": "cd [디렉터리명]",
     "options": [
       "~ (사용자의 홈 디렉터리)",
       ".. (상위 디렉터리)",
@@ -28,12 +44,30 @@
     ]
   },
   {
-    "name": "chmod",
-    "description": "실행 권한을 추가합니다.",
+    "name": "chgrp",
+    "description": "파일이나 디렉터리의 소유 그룹(Group)을 변경하는 명령어",
     "category": "권한 및 소유권",
-    "usage": "chmod +x [hello.sh]",
+    "usage": "chgrp [옵션] [그룹명] [파일명]",
+    "options": [
+      "-R (하위 디렉터리와 파일까지 재귀적으로 소유 그룹 변경)"
+    ]
+  },
+  {
+    "name": "chmod",
+    "description": "파일이나 디렉터리에 대한 접근 권한을 변경하는 명령어",
+    "category": "권한 및 소유권",
+    "usage": "chmod [권한] [파일명]",
     "options": [
       "+x (실행 권한 추가)"
+    ]
+  },
+  {
+    "name": "chown",
+    "description": "파일이나 디렉터리의 소유자(Owner) 및 소유 그룹을 변경하는 명령어",
+    "category": "권한 및 소유권",
+    "usage": "chown [옵션] [소유자]:[그룹] [파일명]",
+    "options": [
+      "-R (하위 디렉터리와 파일까지 재귀적으로 소유자 변경)"
     ]
   },
   {
@@ -47,14 +81,33 @@
     ]
   },
   {
-    "name": "date",
-    "description": "날짜와 시간을 출력합니다.",
-    "category": "시스템 관리 및 정보",
-    "usage": "date +%Y-%m-%d",
+    "name": "curl",
+    "description": "URL을 통해 데이터(HTTP, HTTPS 등)를 전송하거나 웹 페이지 내용을 요청/다운로드하는 명령어",
+    "category": "네트워크",
+    "usage": "curl [옵션] [URL]",
     "options": [
-      "%Y (네 자리 연도)",
-      "%m (두 자리 월)",
-      "%d (두 자리 일)"
+      "-O (원래 파일 이름으로 다운로드 저장)",
+      "-i (응답 헤더 정보 포함 출력)"
+    ]
+  },
+  {
+    "name": "date",
+    "description": "시스템의 날짜와 시간을 출력하거나 포맷에 맞춰 보여주는 명령어",
+    "category": "시스템 관리 및 정보",
+    "usage": "date [포맷]",
+    "options": [
+      "+%Y (네 자리 연도)",
+      "+%m (두 자리 월)",
+      "+%d (두 자리 일)"
+    ]
+  },
+  {
+    "name": "dnf",
+    "description": "로키(Rocky Linux) 및 페도라 계열 패키지 관리 도구로, 패키지를 설치하거나 관리하는 명령어",
+    "category": "시스템 관리 및 정보",
+    "usage": "sudo dnf install [패키지명]",
+    "options": [
+      "install (지정한 패키지 설치)"
     ]
   },
   {
@@ -69,35 +122,57 @@
   },
   {
     "name": "echo",
-    "description": "전달받은 내용을 화면에 출력합니다.",
+    "description": "전달받은 내용이나 변수값을 화면에 출력하는 명령어",
     "category": "텍스트 처리",
-    "usage": "echo \"문자열\"",
+    "usage": "echo [문자열 또는 변수명]",
     "options": []
   },
   {
     "name": "env",
-    "description": "인자 없이 실행하면 환경 변수 목록을 출력합니다.",
+    "description": "인자 없이 실행하면 환경 변수 목록을 출력하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "env",
     "options": []
   },
   {
     "name": "export",
-    "description": "변수를 자식 프로세스에 전달하도록 등록합니다.",
+    "description": "변수를 자식 프로세스에 전달하도록 환경 변수로 등록하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "export 변수명=값",
     "options": []
   },
   {
-    "name": "grep",
-    "description": "입력에서 조건에 맞는 줄을 찾습니다.",
-    "category": "텍스트 처리",
-    "usage": "grep 변수명",
+    "name": "fg",
+    "description": "백그라운드에서 실행 중이거나 정지된 작업(Job)을 포그라운드(Foreground) 상태로 가져오는 명령어",
+    "category": "프로세스 관리",
+    "usage": "fg [%작업번호]",
     "options": []
   },
   {
+    "name": "find",
+    "description": "특정 디렉터리 내에서 이름, 유형 등 조건에 맞는 파일이나 디렉터리를 검색하는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "find [검색경로] [검색조건] [파일명]",
+    "options": [
+      "-name (파일 이름 패턴 검색)",
+      "-type f (일반 파일 검색)",
+      "-type d (디렉터리 검색)"
+    ]
+  },
+  {
+    "name": "grep",
+    "description": "입력이나 파일 내용 중 조건에 맞는 특정 문자열이 포함된 줄을 찾는 명령어",
+    "category": "텍스트 처리",
+    "usage": "grep [조건] [파일명]",
+    "options": [
+      "-i (대소문자 구분 없이 검색)",
+      "-v (패턴과 일치하지 않는 줄 반전 출력)",
+      "-n (줄 번호 포함 출력)"
+    ]
+  },
+  {
     "name": "head",
-    "description": "전체 문서에서 일부만 보고 싶은 경우 사용하는 명령어",
+    "description": "전체 문서에서 앞부분 일부만 보기 위해 사용하는 명령어 (기본값은 10줄)",
     "category": "텍스트 처리",
     "usage": "head [옵션] [파일명]",
     "options": [
@@ -107,14 +182,32 @@
   },
   {
     "name": "history",
-    "description": "파이프라인 연동 예시에 사용된 명령어",
+    "description": "이전에 사용자가 입력했던 명령어 기록 목록을 출력하는 명령어",
     "category": "시스템 관리 및 정보",
-    "usage": "history | sort | less",
+    "usage": "history",
     "options": []
   },
   {
+    "name": "ifconfig",
+    "description": "네트워크 인터페이스(IP 주소, MAC 주소 등)의 설정 및 활성화 상태를 조회하거나 변경하는 명령어",
+    "category": "네트워크",
+    "usage": "ifconfig [인터페이스명]",
+    "options": [
+      "-a (모든 네트워크 인터페이스 정보 출력)"
+    ]
+  },
+  {
+    "name": "jobs",
+    "description": "현재 셸 세션의 백그라운드 또는 일시 중지 상태 작업(Job) 목록을 확인하는 명령어",
+    "category": "프로세스 관리",
+    "usage": "jobs",
+    "options": [
+      "-l (작업 목록에 PID 함께 출력)"
+    ]
+  },
+  {
     "name": "kill",
-    "description": "특정 프로세스에게 종료 신호(sigterm)를 전달하는 명령어",
+    "description": "특정 프로세스에게 종료 신호(sigterm) 등을 전달하는 명령어",
     "category": "프로세스 관리",
     "usage": "kill [옵션] PID",
     "options": [
@@ -126,10 +219,13 @@
   },
   {
     "name": "less",
-    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (검색 편의성이 있음)",
+    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (방향키 이동, f: 다음페이지, b: 이전페이지, q: 종료, 검색 기능 제공)",
     "category": "텍스트 처리",
     "usage": "less [옵션] [파일명]",
-    "options": []
+    "options": [
+      "-N (줄 번호 표시)",
+      "+/키워드 (특정 키워드 검색 시작)"
+    ]
   },
   {
     "name": "ls",
@@ -144,7 +240,7 @@
   },
   {
     "name": "mkdir",
-    "description": "디렉터리 생성하는 명령어",
+    "description": "디렉터리를 생성하는 명령어",
     "category": "파일 및 디렉토리 관리",
     "usage": "mkdir [옵션] [디렉터리명]",
     "options": [
@@ -153,10 +249,12 @@
   },
   {
     "name": "more",
-    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (줄 번호 표시)",
+    "description": "긴 문자 파일의 내용을 한 화면씩 나누어 출력하는 명령어 (진행 퍼센트 표시)",
     "category": "텍스트 처리",
     "usage": "more [옵션] [파일명]",
-    "options": []
+    "options": [
+      "+/키워드 (특정 키워드 검색 시작)"
+    ]
   },
   {
     "name": "mv",
@@ -180,6 +278,18 @@
     ]
   },
   {
+    "name": "netstat",
+    "description": "네트워크 연결 상태, 포트(Port), 라우팅 테이블 및 통계 정보를 확인하는 명령어",
+    "category": "네트워크",
+    "usage": "netstat [옵션]",
+    "options": [
+      "-a (모든 소켓 연결 상태 출력)",
+      "-n (주소 및 포트를 숫자로 표시)",
+      "-t (TCP 연결만 표시)",
+      "-p (사용 중인 프로세스 PID 및 이름 표시)"
+    ]
+  },
+  {
     "name": "pgrep",
     "description": "프로세스의 이름으로 프로세스의 정보를 확인하는 명령어",
     "category": "프로세스 관리",
@@ -187,8 +297,17 @@
     "options": []
   },
   {
+    "name": "ping",
+    "description": "원격 네트워크 호스트에 ICMP 패킷을 보내 통신 상태 및 응답 속도를 테스트하는 명령어",
+    "category": "네트워크",
+    "usage": "ping [옵션] [IP 또는 도메인]",
+    "options": [
+      "-c (지정한 횟수만큼 패킷을 보내고 종료)"
+    ]
+  },
+  {
     "name": "printenv",
-    "description": "환경 변수 목록을 출력합니다.",
+    "description": "환경 변수 목록을 출력하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "printenv [변수명]",
     "options": []
@@ -238,40 +357,64 @@
   },
   {
     "name": "sleep",
-    "description": "프로세스를 대기시키는 명령어 예시로 사용됨",
+    "description": "지정한 시간 동안 프로세스를 대기시키는 명령어",
     "category": "프로세스 관리",
     "usage": "sleep [초]",
-    "options": []
+    "options": [
+      "& (백그라운드 실행)"
+    ]
   },
   {
     "name": "sort",
-    "description": "파이프라인 예시에서 정렬 기능으로 사용된 명령어",
+    "description": "텍스트 줄을 정렬하거나 파이프라인 출력을 정렬하는 명령어",
     "category": "텍스트 처리",
-    "usage": "sort",
-    "options": []
+    "usage": "sort [옵션]",
+    "options": [
+      "-r (내림차순 정렬)",
+      "-n (숫자 기준 정렬)"
+    ]
   },
   {
     "name": "source",
-    "description": "파일 안 명령어를 현재 셸에서 실행해 설정을 적용합니다.",
+    "description": "파일 안 명령어를 현재 셸에서 실행해 설정을 적용하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "source ~/.bashrc",
     "options": []
   },
   {
+    "name": "ssh",
+    "description": "암호화된 프로토콜을 이용해 원격 리눅스 서버에 안전하게 접속하는 명령어",
+    "category": "네트워크",
+    "usage": "ssh [계정명]@[IP/도메인]",
+    "options": [
+      "-p (접속 포트 번호 지정)"
+    ]
+  },
+  {
     "name": "stat",
-    "description": "파일의 정보 출력",
+    "description": "파일의 상세 정보를 출력하는 명령어",
     "category": "파일 및 디렉토리 관리",
     "usage": "stat [파일명]",
     "options": []
   },
   {
+    "name": "sudo",
+    "description": "관리자(root) 권한이나 다른 사용자의 권한으로 명령어를 실행하는 명령어",
+    "category": "권한 및 소유권",
+    "usage": "sudo [명령어]",
+    "options": [
+      "-i (root 관리자 셸 환경으로 완전히 전환)"
+    ]
+  },
+  {
     "name": "tail",
-    "description": "전체 문서에서 일부만 보고 싶은 경우 사용하는 명령어",
+    "description": "전체 문서에서 뒷부분 일부만 보고 싶은 경우 사용하는 명령어 (기본값은 10줄)",
     "category": "텍스트 처리",
     "usage": "tail [옵션] [파일명]",
     "options": [
       "-c (특정 바이트만 출력)",
-      "-n (특정 줄 수만 출력)"
+      "-n (특정 줄 수만 출력)",
+      "-f (실시간으로 추가되는 내용 모니터링)"
     ]
   },
   {
@@ -295,8 +438,15 @@
     ]
   },
   {
+    "name": "tree",
+    "description": "디렉터리의 하위 구조를 트리의 형태 형태로 시각적으로 보여주는 명령어",
+    "category": "파일 및 디렉토리 관리",
+    "usage": "tree [경로]",
+    "options": []
+  },
+  {
     "name": "unset",
-    "description": "변수를 삭제합니다. 변수명 앞에 $를 붙이지 않습니다.",
+    "description": "등록한 셸 변수를 삭제하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "unset 변수명",
     "options": []
@@ -316,7 +466,7 @@
   },
   {
     "name": "vim",
-    "description": "개선된 vi로 언어에 따른 코드 하이라이팅 등 다양한 고급 기능 제공",
+    "description": "개선된 vi로 언어에 따른 코드 하이라이팅 등 다양한 고급 기능 제공하는 텍스트 편집기",
     "category": "텍스트 처리",
     "usage": "vim [파일명]",
     "options": []
@@ -327,18 +477,28 @@
     "category": "텍스트 처리",
     "usage": "vimtutor –g ko",
     "options": [
-      "-g ko (한국어 실습)"
+      "-g ko (한국어로 길잡이 실행)"
     ]
   },
   {
     "name": "wc",
     "description": "줄, 단어, 바이트 개수를 출력하는 명령어",
     "category": "텍스트 처리",
-    "usage": "wc [옵션]",
+    "usage": "wc [옵션] [파일명]",
     "options": [
-      "-l (줄(line) 개수 출력)",
-      "-w (단어(word) 개수 출력)",
-      "-c (바이트(byte) 개수 출력)"
+      "-l (줄 개수 출력)",
+      "-w (단어 개수 출력)",
+      "-c (바이트 개수 출력)"
+    ]
+  },
+  {
+    "name": "wget",
+    "description": "웹 서버로부터 파일(HTTP, HTTPS, FTP)을 명령 줄 상에서 다운로드하는 명령어",
+    "category": "네트워크",
+    "usage": "wget [옵션] [URL]",
+    "options": [
+      "-O (다른 파일명으로 변경하여 저장)",
+      "-b (백그라운드에서 다운로드 실행)"
     ]
   }
 ]

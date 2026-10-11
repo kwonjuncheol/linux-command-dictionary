@@ -302,7 +302,7 @@
         }
 
         .sticky-header {
-            position: sticky ;
+            position: sticky;
             top: 0px;
             background-color: #888888;
             /* 배경색과 똑같이 지정하여 스크롤 시 뒤 내용이 비치지 않음 */
@@ -311,6 +311,39 @@
             padding-bottom: 15px;
             z-index: 100;
             /* 카드나 리스트보다 위에 떠 있도록 설정 */
+        }
+
+        /* 📋 명령어 복사 버튼 스타일 */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #444;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            color: #6DBE66;
+            font-size: 20px;
+        }
+
+        .copy-btn {
+            background-color: #383838;
+            color: #eeeeee;
+            border: 1px solid #555;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background-color: #6DBE66;
+            color: #1e1e1e;
         }
     </style>
 </head>
@@ -427,12 +460,15 @@
                 }
 
                 card.innerHTML = `
-                ${getCheckboxHtml(cmd.name)}
-                    <h3>${cmd.name}</h3>
-                    <p>${cmd.description}</p>
-                    <div class="usage-box">사용법: ${cmd.usage}</div>
-                    ${optionsHtml}
-                `;
+    ${getCheckboxHtml(cmd.name)}
+    <div class="card-header">
+        <h3>${cmd.name}</h3>
+        <button class="copy-btn" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
+    </div>
+    <p>${cmd.description}</p>
+    <div class="usage-box">사용법: ${cmd.usage}</div>
+    ${optionsHtml}
+`;
                 container.appendChild(card);
             });
         }
@@ -447,9 +483,9 @@
             commands.forEach(cmd => {
                 const item = document.createElement('div');
                 item.className = 'commandListItem';
-                // 목록 행 클릭 시 상세 모달 오픈 (단, 체크박스 영역 클릭 시엔 팝업 안 뜸)
+                // 목록 행 클릭 시 상세 모달 오픈 (단, 체크박스 및 복사 버튼 클릭 시엔 팝업 안 뜸)
                 item.onclick = (e) => {
-                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL') {
+                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && !e.target.classList.contains('copy-btn')) {
                         openDetailModal(cmd.name);
                     }
                 };
@@ -462,6 +498,7 @@
                             <p>${cmd.description}</p>
                         </div>
                     </div>
+                    <button class="copy-btn" style="margin-right: 15px;" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
                     <div class="item-category">${cmd.category || '기타'}</div>
                 `;
                 container.appendChild(item);
@@ -600,6 +637,24 @@
             `;
 
             compareModal.style.display = 'flex';
+        }
+
+        // 📋 명령어 이름(cmd.name)만 클립보드에 복사하는 전용 함수
+        function copyCommandName(cmdName, btnElement) {
+            navigator.clipboard.writeText(cmdName).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = "✓ 복사됨!";
+                btnElement.style.backgroundColor = "#6DBE66";
+                btnElement.style.color = "#1e1e1e";
+
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.style.backgroundColor = "#383838";
+                    btnElement.style.color = "#eeeeee";
+                }, 1500);
+            }).catch(err => {
+                console.error('복사 실패:', err);
+            });
         }
     </script>
 </body>
