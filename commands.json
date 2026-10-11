@@ -72,16 +72,6 @@
     ]
   },
   {
-    "name": "curl",
-    "description": "URL을 통해 데이터(HTTP, HTTPS 등)를 전송하거나 웹 페이지 내용을 요청/다운로드하는 명령어",
-    "category": "네트워크",
-    "usage": "curl [옵션] [URL]",
-    "options": [
-      "-O (원래 파일 이름으로 다운로드 저장)",
-      "-i (응답 헤더 정보 포함 출력)"
-    ]
-  },
-  {
     "name": "date",
     "description": "시스템의 날짜와 시간을 출력하거나 포맷에 맞춰 보여주는 명령어",
     "category": "시스템 관리 및 정보",
@@ -260,18 +250,6 @@
     ]
   },
   {
-    "name": "netstat",
-    "description": "네트워크 연결 상태, 포트(Port), 라우팅 테이블 및 통계 정보를 확인하는 명령어",
-    "category": "네트워크",
-    "usage": "netstat [옵션]",
-    "options": [
-      "-a (모든 소켓 연결 상태 출력)",
-      "-n (주소 및 포트를 숫자로 표시)",
-      "-t (TCP 연결만 표시)",
-      "-p (사용 중인 프로세스 PID 및 이름 표시)"
-    ]
-  },
-  {
     "name": "pgrep",
     "description": "프로세스의 이름으로 프로세스의 정보를 확인하는 명령어",
     "category": "프로세스 관리",
@@ -434,6 +412,26 @@
     "options": []
   },
   {
+    "name": "vi",
+    "description": "설치 없이 사용할 수 있는 리눅스에 내장된 기본 텍스트 편집기",
+    "category": "텍스트 처리",
+    "usage": "vi [파일명]",
+    "options": [
+      "i, I, a, A, o, O (입력 모드 전환)",
+      ":w (편집 중인 문서 저장)",
+      ":q (종료)",
+      ":q! (저장하지 않고 종료)",
+      ":wq (저장하고 종료)"
+    ]
+  },
+  {
+    "name": "vim",
+    "description": "개선된 vi(visual editor)로 코드 하이라이팅 등 다양한 고급 기능 제공하는 텍스트 편집기",
+    "category": "텍스트 처리",
+    "usage": "vim [파일명]",
+    "options": []
+  },
+  {
     "name": "vimtutor",
     "description": "vim 편집기에서 자주 사용하는 기능을 따라하기 실습을 통해 익숙해 질 수 있는 기능",
     "category": "텍스트 처리",
@@ -451,16 +449,6 @@
       "-l (줄 개수 출력)",
       "-w (단어 개수 출력)",
       "-c (바이트 개수 출력)"
-    ]
-  },
-  {
-    "name": "wget",
-    "description": "웹 서버로부터 파일(HTTP, HTTPS, FTP)을 명령 줄 상에서 다운로드하는 명령어",
-    "category": "네트워크",
-    "usage": "wget [옵션] [URL]",
-    "options": [
-      "-O (다른 파일명으로 변경하여 저장)",
-      "-b (백그라운드에서 다운로드 실행)"
     ]
   }
 ]
