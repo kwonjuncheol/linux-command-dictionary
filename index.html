@@ -475,13 +475,15 @@
             commands.forEach(cmd => {
                 const item = document.createElement('div');
                 item.className = 'commandListItem';
-                // 목록상태에서 클릭 시 상세정보 나타남.
-                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && !e.target.classList.contains('copy-btn')) {
-                    openDetailModal(cmd.name);
-                }
-            };
 
-            item.innerHTML = `
+                // 목록상태에서 클릭 시 상세정보 나타남 (체크박스, 복사 버튼 제외)
+                item.onclick = (e) => {
+                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && !e.target.classList.contains('copy-btn')) {
+                        openDetailModal(cmd.name);
+                    }
+                };
+
+                item.innerHTML = `
                     <div style="display: flex; align-items: center; flex: 1;">
                         ${getCheckboxHtml(cmd.name, true)}
                         <div class="item-left" style="flex:1;">
@@ -492,8 +494,8 @@
                     <button class="copy-btn" style="margin-right: 15px;" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
                     <div class="item-category">${cmd.category || '기타'}</div>
                 `;
-            container.appendChild(item);
-        });
+                container.appendChild(item);
+            });
         }
 
         // 현재 뷰 상태에 따라 올바른 함수를 호출해주는 함수
