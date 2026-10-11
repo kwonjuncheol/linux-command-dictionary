@@ -1,14 +1,5 @@
 [
   {
-    "name": "apt",
-    "description": "우분투(Ubuntu) 등 데비안 계열 리눅스 패키지 관리 도구로, 소프트웨어를 설치하거나 업데이트하는 명령어",
-    "category": "시스템 관리 및 정보",
-    "usage": "sudo apt install [패키지명]",
-    "options": [
-      "install (지정한 패키지 설치)"
-    ]
-  },
-  {
     "name": "bash",
     "description": "Bash 셸 스크립트 파일을 직접 읽어 실행하는 명령어 (파일의 자체 실행 권한이 불필요하지만 읽기 권한 필요)",
     "category": "시스템 관리 및 정보",
@@ -99,15 +90,6 @@
       "+%Y (네 자리 연도)",
       "+%m (두 자리 월)",
       "+%d (두 자리 일)"
-    ]
-  },
-  {
-    "name": "dnf",
-    "description": "로키(Rocky Linux) 및 페도라 계열 패키지 관리 도구로, 패키지를 설치하거나 관리하는 명령어",
-    "category": "시스템 관리 및 정보",
-    "usage": "sudo dnf install [패키지명]",
-    "options": [
-      "install (지정한 패키지 설치)"
     ]
   },
   {
@@ -392,7 +374,7 @@
   },
   {
     "name": "stat",
-    "description": "파일의 상세 정보를 출력하는 명령어",
+    "description": "파일의 상세 정보(소유자, 크기, 권한, 수정/접근 시간 등)를 출력하는 명령어",
     "category": "파일 및 디렉토리 관리",
     "usage": "stat [파일명]",
     "options": []
@@ -438,10 +420,10 @@
     ]
   },
   {
-    "name": "tree",
-    "description": "디렉터리의 하위 구조를 트리의 형태 형태로 시각적으로 보여주는 명령어",
-    "category": "파일 및 디렉토리 관리",
-    "usage": "tree [경로]",
+    "name": "umask",
+    "description": "새로 생성되는 파일이나 디렉터리의 기본 접근 권한 마스크 값을 설정하거나 확인하는 명령어",
+    "category": "권한 및 소유권",
+    "usage": "umask [마스크값]",
     "options": []
   },
   {
@@ -449,26 +431,6 @@
     "description": "등록한 셸 변수를 삭제하는 명령어",
     "category": "시스템 관리 및 정보",
     "usage": "unset 변수명",
-    "options": []
-  },
-  {
-    "name": "vi",
-    "description": "설치 없이 사용할 수 있는 리눅스에 내장된 기본 텍스트 편집기",
-    "category": "텍스트 처리",
-    "usage": "vi [파일명]",
-    "options": [
-      "i, I, a, A, o, O (입력 모드 전환)",
-      ":w (편집 중인 문서 저장)",
-      ":q (종료)",
-      ":q! (저장하지 않고 종료)",
-      ":wq (저장하고 종료)"
-    ]
-  },
-  {
-    "name": "vim",
-    "description": "개선된 vi로 언어에 따른 코드 하이라이팅 등 다양한 고급 기능 제공하는 텍스트 편집기",
-    "category": "텍스트 처리",
-    "usage": "vim [파일명]",
     "options": []
   },
   {

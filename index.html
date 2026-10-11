@@ -29,7 +29,6 @@
 
         .topButtons button {
             flex: 1;
-            /* 💡 추가됨: 버튼 3개가 공간을 큼직하게 나눠 가지며 크기가 약 2배로 쫙 늘어납니다 */
             padding: 0 18px;
             font-size: 14px;
             font-weight: bold;
@@ -164,7 +163,6 @@
             border: 1px solid #555;
         }
 
-        /* 목록으로 보기 스타일 */
         .commandListContainer {
             display: flex;
             flex-direction: column;
@@ -220,7 +218,6 @@
             white-space: nowrap;
         }
 
-        /* 체크박스 추가*/
         .checkbox-wrapper {
             display: flex;
             align-items: center;
@@ -242,7 +239,6 @@
             accent-color: #6DBE66;
         }
 
-        /* 팝업(평소엔 보이지않고 명령어 클릭하면 나옴) */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -305,15 +301,11 @@
             position: sticky;
             top: 0px;
             background-color: #888888;
-            /* 배경색과 똑같이 지정하여 스크롤 시 뒤 내용이 비치지 않음 */
             padding-top: 40px;
-            /* 💡 상단 여백을 sticky 영역 내부로 가져옴 */
             padding-bottom: 15px;
             z-index: 100;
-            /* 카드나 리스트보다 위에 떠 있도록 설정 */
         }
 
-        /* 📋 명령어 복사 버튼 스타일 */
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -350,21 +342,19 @@
 
 <body>
     <div class="container">
-        <!-- 상단 고정 영역 -->
+        <!-- 상단 고정 영역 (버튼, 검색창, 카테고리 버튼) -->
         <div class="sticky-header">
             <!-- 상단 첫째 줄: 버튼 3개 + 검색창 -->
             <div class="topButtons">
                 <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
                 <button id="comPareCommandsBtn" class="comPareCommandsBtn">선택한 명령어 비교 (0/2)</button>
                 <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
-
-                <!-- 남은 공간을 채울 검색창 영역 -->
                 <div class="searchArea">
                     <input type="text" id="searchInput" placeholder="🔍 명령어 또는 설명으로 검색">
                 </div>
             </div>
 
-            <!-- 검색창 아래의 카테고리 버튼 -->
+            <!-- 6개의 카테고리 버튼 -->
             <div class="categoryContainer">
                 <button class="categoryBtn" data-category="파일 및 디렉토리 관리">파일 및 디렉토리 관리</button>
                 <button class="categoryBtn" data-category="시스템 관리 및 정보">시스템 관리 및 정보</button>
@@ -373,10 +363,12 @@
                 <button class="categoryBtn" data-category="권한 및 소유권">권한 및 소유권</button>
                 <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
             </div>
+            <div id="commandCountInfo" style="margin-top: 15px; font-size: 15px; font-weight: bold; color: #a6e22e;">
+                전체 명령어: 50개
+            </div>
         </div>
         <!-- 상단 고정 영역 -->
 
-        <!-- 해당 카데고리 명령어 컨테이너 -->
         <div id="cardContainer" class="commandCardContainer"></div>
     </div>
 
@@ -428,13 +420,13 @@
             document.getElementById('comPareCommandsBtn').innerText = `명령어 비교 (${selectedForCompare.length}/2)`;
         };
 
-        // commands.json 불러오고 abc 순으로 정렬함.
         window.addEventListener('DOMContentLoaded', () => {
             fetch('commands.json')
                 .then(response => response.json())
                 .then(data => {
                     allCommands = data.sort((a, b) => a.name.localeCompare(b.name));
-                    displayCommands(allCommands); // 정렬된 커맨드(카드 형태) 표시
+                    displayCommands(allCommands);
+                    updateCommandCount(allCommands.length, "전체"); // 👈 초기 50개 카운트 반영
                 })
                 .catch(error => console.error('JSON 로드 실패:', error));
         });
@@ -483,14 +475,13 @@
             commands.forEach(cmd => {
                 const item = document.createElement('div');
                 item.className = 'commandListItem';
-                // 목록 행 클릭 시 상세 모달 오픈 (단, 체크박스 및 복사 버튼 클릭 시엔 팝업 안 뜸)
-                item.onclick = (e) => {
-                    if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && !e.target.classList.contains('copy-btn')) {
-                        openDetailModal(cmd.name);
-                    }
-                };
+                // 목록상태에서 클릭 시 상세정보 나타남.
+                if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'LABEL' && !e.target.classList.contains('copy-btn')) {
+                    openDetailModal(cmd.name);
+                }
+            };
 
-                item.innerHTML = `
+            item.innerHTML = `
                     <div style="display: flex; align-items: center; flex: 1;">
                         ${getCheckboxHtml(cmd.name, true)}
                         <div class="item-left" style="flex:1;">
@@ -501,34 +492,35 @@
                     <button class="copy-btn" style="margin-right: 15px;" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
                     <div class="item-category">${cmd.category || '기타'}</div>
                 `;
-                container.appendChild(item);
-            });
+            container.appendChild(item);
+        });
         }
 
         // 현재 뷰 상태에 따라 올바른 함수를 호출해주는 함수
-        function renderCurrentView(commands) {
+        function renderCurrentView(commands, categoryName = "전체") {
             if (isListView) {
                 displayCommandList(commands);
             } else {
                 displayCommands(commands);
             }
+            updateCommandCount(commands.length, categoryName);
         }
 
-        // 카테고리 버튼 클릭 이벤트 연결
+        // 카테고리 버튼 클릭 이벤트
         const categoryButtons = document.querySelectorAll('.categoryBtn');
         categoryButtons.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedCategory = button.getAttribute('data-category');
                 const filtered = allCommands
                     .filter(cmd => cmd.category === selectedCategory)
-                    .sort((a, b) => a.name.localeCompare(b.name)); // 카테고리 내부에서도 ABC 순 정렬
+                    .sort((a, b) => a.name.localeCompare(b.name));
 
                 // 현재 뷰 상태를 유지한 채 필터링된 결과 출력
-                renderCurrentView(filtered);
+                renderCurrentView(filtered, selectedCategory);
             });
         });
 
-        // 실시간 검색창 입력 이벤트 연결
+        // 실시간 검색창 입력 이벤트
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             const keyword = e.target.value.toLowerCase().trim();
@@ -537,32 +529,32 @@
                 cmd.description.toLowerCase().includes(keyword)
             );
 
-            // 검색할 때도 현재 뷰 상태 유지
-            renderCurrentView(filtered);
+            const categoryText = keyword ? `검색 결과 ("${keyword}")` : "전체";
+            renderCurrentView(filtered, categoryText);
         });
 
 
-        // 카드 보기 버튼 클릭 이벤트 연결
+        // 카드 보기 버튼 클릭 이벤트
         const categoryCommandsBtn = document.getElementById('categoryCommandsBtn');
         categoryCommandsBtn.addEventListener('click', () => {
             searchInput.value = '';
-            isListView = false; // 명확하게 카드 뷰로 상태 변경
+            isListView = false;
             const sorted = [...allCommands].sort((a, b) => a.name.localeCompare(b.name));
             displayCommands(sorted);
+            updateCommandCount(sorted.length, "전체");
         });
 
-        // 목록 보기 버튼 클릭 이벤트 연결
+        // 목록 보기 버튼 클릭 이벤트]
         const allCommandsBtn = document.getElementById('allCommandsBtn');
         allCommandsBtn.addEventListener('click', () => {
             searchInput.value = '';
-            isListView = true; // 명확하게 리스트 뷰로 상태 변경[cite: 7]
-            const sortedCommands = [...allCommands].sort((a, b) =>
-                a.name.localeCompare(b.name)
-            );
+            isListView = true;
+            const sortedCommands = [...allCommands].sort((a, b) => a.name.localeCompare(b.name));
             displayCommandList(sortedCommands);
+            updateCommandCount(sortedCommands.length, "전체");
         });
 
-        // "명령어 비교" 버튼 클릭 시 팝업 띄우기
+        // 명령어 비교 버튼 누르면
         const compareModal = document.getElementById('compareModal');
         const modalCompareBody = document.getElementById('modalCompareBody');
 
@@ -601,7 +593,7 @@
             compareModal.style.display = 'flex';
         });
 
-        // 팝업 닫기 기능
+        // 팝업 닫기
         document.getElementById('closeModalBtn').addEventListener('click', () => {
             compareModal.style.display = 'none';
         });
@@ -612,7 +604,7 @@
             }
         });
 
-        // 단일 명령어 상세 보기 팝업 함수
+        // 명령어 상세 보기 팝업 함수
         function openDetailModal(cmdName) {
             const cmd = allCommands.find(c => c.name === cmdName);
             if (!cmd) return;
@@ -639,7 +631,7 @@
             compareModal.style.display = 'flex';
         }
 
-        // 📋 명령어 이름(cmd.name)만 클립보드에 복사하는 전용 함수
+        // 명령어 복사하는 함수
         function copyCommandName(cmdName, btnElement) {
             navigator.clipboard.writeText(cmdName).then(() => {
                 const originalText = btnElement.innerText;
@@ -656,7 +648,14 @@
                 console.error('복사 실패:', err);
             });
         }
+
+        // 현재 선택된 카테고리의 명령어 개수를 업데이트 하는 함수
+        function updateCommandCount(count, categoryName = "전체") {
+            const countInfo = document.getElementById('commandCountInfo');
+            if (countInfo) {
+                countInfo.innerText = `${categoryName} 명령어: ${count}개`;
+            }
+        }
     </script>
 </body>
-
 </html>
