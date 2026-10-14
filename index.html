@@ -133,7 +133,6 @@
             color: #6DBE66;
             /* 포인트 색상 */
             font-size: 20px;
-            border-bottom: 1px solid #444;
             padding-bottom: 8px;
         }
 
@@ -484,16 +483,18 @@
                 };
 
                 item.innerHTML = `
-                    <div style="display: flex; align-items: center; flex: 1;">
-                        ${getCheckboxHtml(cmd.name, true)}
-                        <div class="item-left" style="flex:1;">
-                            <h3>${cmd.name}</h3>
-                            <p>${cmd.description}</p>
-                        </div>
-                    </div>
-                    <button class="copy-btn" style="margin-right: 15px;" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
-                    <div class="item-category">${cmd.category || '기타'}</div>
-                `;
+    <div style="display: flex; align-items: center; flex: 1;">
+        ${getCheckboxHtml(cmd.name, true)}
+        <div class="item-left" style="flex: 1; display: flex; align-items: center; gap: 15px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <h3 style="margin: 0;">${cmd.name}</h3>
+                <button class="copy-btn" onclick="copyCommandName('${cmd.name}', this)">📋 복사</button>
+            </div>
+            <p style="margin: 0;">${cmd.description}</p>
+        </div>
+    </div>
+    <div class="item-category">${cmd.category || '기타'}</div>
+`;
                 container.appendChild(item);
             });
         }
@@ -660,4 +661,5 @@
         }
     </script>
 </body>
+
 </html>
