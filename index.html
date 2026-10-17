@@ -69,32 +69,27 @@
             background-color: #3f3f3f;
         }
 
+        /* 카테고리 증설로 인해 조절좀 함.*/
         .categoryContainer {
             display: flex;
+            flex-wrap: wrap; 
             justify-content: space-between;
-            gap: 0;
+            gap: 8px;
             margin-top: 15px;
         }
 
         .categoryBtn {
             flex: 1;
-            margin: 0 8px;
+            min-width: 130px;
+            margin: 0;
             background-color: #efefef;
             color: #333333;
             border: 1px solid #cccccc;
-            padding: 12px 10px;
+            padding: 10px 8px;
             font-size: 14px;
             text-align: center;
             border-radius: 6px;
             cursor: pointer;
-        }
-
-        .categoryBtn:first-child {
-            margin-left: 0;
-        }
-
-        .categoryBtn:last-child {
-            margin-right: 0;
         }
 
         .categoryBtn:hover {
@@ -131,7 +126,6 @@
         .commandCard h3 {
             margin-top: 0;
             color: #6DBE66;
-            /* 포인트 색상 */
             font-size: 20px;
             padding-bottom: 8px;
         }
@@ -353,7 +347,7 @@
                 </div>
             </div>
 
-            <!-- 6개의 카테고리 버튼 -->
+            <!-- 카테고리 버튼 7개 -->
             <div class="categoryContainer">
                 <button class="categoryBtn" data-category="파일 및 디렉토리 관리">파일 및 디렉토리 관리</button>
                 <button class="categoryBtn" data-category="시스템 관리 및 정보">시스템 관리 및 정보</button>
@@ -361,9 +355,10 @@
                 <button class="categoryBtn" data-category="네트워크">네트워크</button>
                 <button class="categoryBtn" data-category="권한 및 소유권">권한 및 소유권</button>
                 <button class="categoryBtn" data-category="텍스트 처리">텍스트 처리</button>
+                <button class="categoryBtn" data-category="셸 스크립트 제어">셸 스크립트 제어</button>
             </div>
             <div id="commandCountInfo" style="margin-top: 15px; font-size: 15px; font-weight: bold; color: #a6e22e;">
-                전체 명령어: 50개
+                전체 명령어: 75개
             </div>
         </div>
         <!-- 상단 고정 영역 -->
@@ -385,10 +380,9 @@
 
     <script>
         let allCommands = [];
-        let isListView = false; // false: 카드 뷰, true: 리스트 뷰
-        let selectedForCompare = []; // 비교하려고 체크박스에 선택된 명령어 저장
+        let isListView = false;         // false: 카드 뷰, true: 리스트 뷰
+        let selectedForCompare = [];    // 비교하려고 체크박스에 선택된 명령어 저장
 
-        // 체크박스 HTML을 생성해주는 공통 함수
         function getCheckboxHtml(cmdName, isList = false) {
             const isChecked = selectedForCompare.includes(cmdName) ? 'checked' : '';
             const wrapperClass = isList ? 'checkbox-wrapper list-checkbox-wrapper' : 'checkbox-wrapper';
@@ -416,7 +410,7 @@
                 selectedForCompare = selectedForCompare.filter(name => name !== cmdName);
             }
 
-            document.getElementById('comPareCommandsBtn').innerText = `명령어 비교 (${selectedForCompare.length}/2)`;
+            document.getElementById('comPareCommandsBtn').innerText = `선택한 명령어 비교 (${selectedForCompare.length}/2)`;
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -425,7 +419,7 @@
                 .then(data => {
                     allCommands = data.sort((a, b) => a.name.localeCompare(b.name));
                     displayCommands(allCommands);
-                    updateCommandCount(allCommands.length, "전체"); // 👈 초기 50개 카운트 반영
+                    updateCommandCount(allCommands.length, "전체"); 
                 })
                 .catch(error => console.error('JSON 로드 실패:', error));
         });
@@ -523,7 +517,7 @@
             });
         });
 
-        // 실시간 검색창 입력 이벤트
+// 실시간 검색창 입력 이벤트
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             const keyword = e.target.value.toLowerCase().trim();
@@ -607,7 +601,7 @@
             }
         });
 
-        // 명령어 상세 보기 팝업 함수
+// 명령어 상세 보기 팝업 함수
         function openDetailModal(cmdName) {
             const cmd = allCommands.find(c => c.name === cmdName);
             if (!cmd) return;
