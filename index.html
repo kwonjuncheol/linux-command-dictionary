@@ -97,7 +97,7 @@
             cursor: pointer;
         }
 
-        .commandCardContainer {
+        .commandcommandContainer {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
@@ -339,9 +339,9 @@
         <div class="sticky-header">
             <!-- 상단 첫째 줄: 버튼 3개 + 검색창 -->
             <div class="topButtons">
-                <button id="categoryCommandsBtn" class="categoryCommandsBtn">카드 보기</button>
-                <button id="comPareCommandsBtn" class="comPareCommandsBtn">선택한 명령어 비교 (0/2)</button>
-                <button id="allCommandsBtn" class="allCommandsBtn">목록 보기</button>
+                <button id="cardViewBtn" class="cardViewBtn">카드 보기</button>
+                <button id="compareBtn" class="compareBtn">선택한 명령어 비교 (0/2)</button>
+                <button id="listViewBtn" class="listViewBtn">목록 보기</button>
                 <div class="searchArea">
                     <input type="text" id="searchInput" placeholder="🔍 명령어 또는 설명으로 검색">
                 </div>
@@ -363,17 +363,17 @@
         </div>
         <!-- 상단 고정 영역 -->
 
-        <div id="cardContainer" class="commandCardContainer"></div>
+        <div id="commandContainer" class="commandcommandContainer"></div>
     </div>
 
     <!-- 비교하기 팝업 -->
-    <div id="compareModal" class="modal-overlay">
+    <div id="modal" class="modal-overlay">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>🔍 명령어 비교</h2>
                 <button id="closeModalBtn" class="close-btn">&times;</button>
             </div>
-            <div id="modalCompareBody" class="modal-body">
+            <div id="modalBody" class="modal-body">
             </div>
         </div>
     </div>
@@ -410,7 +410,7 @@
                 selectedForCompare = selectedForCompare.filter(name => name !== cmdName);
             }
 
-            document.getElementById('comPareCommandsBtn').innerText = `선택한 명령어 비교 (${selectedForCompare.length}/2)`;
+            document.getElementById('compareBtn').innerText = `선택한 명령어 비교 (${selectedForCompare.length}/2)`;
         };
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -418,17 +418,17 @@
                 .then(response => response.json())
                 .then(data => {
                     allCommands = data.sort((a, b) => a.name.localeCompare(b.name));
-                    displayCommands(allCommands);
+                    displayCommandCards(allCommands);
                     updateCommandCount(allCommands.length, "전체"); 
                 })
                 .catch(error => console.error('JSON 로드 실패:', error));
         });
 
         // 카드 형태로 보여주는 함수
-        function displayCommands(commands) {
+        function displayCommandCards(commands) {
             isListView = false;
-            const container = document.getElementById('cardContainer');
-            container.className = 'commandCardContainer';
+            const container = document.getElementById('commandContainer');
+            container.className = 'commandcommandContainer';
             container.innerHTML = '';
 
             commands.forEach(cmd => {
@@ -461,7 +461,7 @@
         // 리스트로 보여주는 함수
         function displayCommandList(commands) {
             isListView = true;
-            const container = document.getElementById('cardContainer');
+            const container = document.getElementById('commandContainer');
             container.className = 'commandListContainer';
             container.innerHTML = '';
 
@@ -494,13 +494,13 @@
         }
 
         // 현재 뷰 상태에 따라 올바른 함수를 호출해주는 함수
-        function renderCurrentView(commands, categoryName = "전체") {
+        function renderCurrentView(commands, label = "전체") {
             if (isListView) {
                 displayCommandList(commands);
             } else {
-                displayCommands(commands);
+                displayCommandCards(commands);
             }
-            updateCommandCount(commands.length, categoryName);
+            updateCommandCount(commands.length, label);
         }
 
         // 카테고리 버튼 클릭 이벤트
@@ -517,7 +517,7 @@
             });
         });
 
-// 실시간 검색창 입력 이벤트
+        // 실시간 검색창 입력 이벤트
         const searchInput = document.getElementById('searchInput');
         searchInput.addEventListener('input', (e) => {
             const keyword = e.target.value.toLowerCase().trim();
@@ -526,24 +526,24 @@
                 cmd.description.toLowerCase().includes(keyword)
             );
 
-            const categoryText = keyword ? `검색 결과 ("${keyword}")` : "전체";
-            renderCurrentView(filtered, categoryText);
+            const label = keyword ? `검색 결과 ("${keyword}")` : "전체";
+            renderCurrentView(filtered, label);
         });
 
 
         // 카드 보기 버튼 클릭 이벤트
-        const categoryCommandsBtn = document.getElementById('categoryCommandsBtn');
-        categoryCommandsBtn.addEventListener('click', () => {
+        const cardViewBtn = document.getElementById('cardViewBtn');
+        cardViewBtn.addEventListener('click', () => {
             searchInput.value = '';
             isListView = false;
             const sorted = [...allCommands].sort((a, b) => a.name.localeCompare(b.name));
-            displayCommands(sorted);
+            displayCommandCards(sorted);
             updateCommandCount(sorted.length, "전체");
         });
 
-        // 목록 보기 버튼 클릭 이벤트]
-        const allCommandsBtn = document.getElementById('allCommandsBtn');
-        allCommandsBtn.addEventListener('click', () => {
+        // 목록 보기 버튼 클릭 이벤트
+        const listViewBtn = document.getElementById('listViewBtn');
+        listViewBtn.addEventListener('click', () => {
             searchInput.value = '';
             isListView = true;
             const sortedCommands = [...allCommands].sort((a, b) => a.name.localeCompare(b.name));
@@ -552,16 +552,16 @@
         });
 
         // 명령어 비교 버튼 누르면
-        const compareModal = document.getElementById('compareModal');
-        const modalCompareBody = document.getElementById('modalCompareBody');
+        const modal = document.getElementById('modal');
+        const modalBody = document.getElementById('modalBody');
 
-        document.getElementById('comPareCommandsBtn').addEventListener('click', () => {
+        document.getElementById('compareBtn').addEventListener('click', () => {
             if (selectedForCompare.length === 0) {
                 alert("비교할 명령어를 체크박스로 먼저 선택해주세요. (최대 2개)");
                 return;
             }
 
-            modalCompareBody.innerHTML = '';
+            modalBody.innerHTML = '';
 
             selectedForCompare.forEach(cmdName => {
                 const cmd = allCommands.find(c => c.name === cmdName);
@@ -575,7 +575,7 @@
                         `;
                     }
 
-                    modalCompareBody.innerHTML += `
+                    modalBody.innerHTML += `
                         <div style="flex: 1; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; padding: 25px; color: #ccc;">
                             <h3 style="color: #6DBE66; font-size: 24px; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px;">${cmd.name}</h3>
                             <p style="font-size: 15px; line-height: 1.5; color: #eee;">${cmd.description}</p>
@@ -587,17 +587,17 @@
                 }
             });
 
-            compareModal.style.display = 'flex';
+            modal.style.display = 'flex';
         });
 
         // 팝업 닫기
         document.getElementById('closeModalBtn').addEventListener('click', () => {
-            compareModal.style.display = 'none';
+            modal.style.display = 'none';
         });
 
-        compareModal.addEventListener('click', (e) => {
-            if (e.target === compareModal) {
-                compareModal.style.display = 'none';
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
             }
         });
 
@@ -615,7 +615,7 @@
                 `;
             }
 
-            modalCompareBody.innerHTML = `
+            modalBody.innerHTML = `
                 <div style="flex: 1; background-color: #1e1e1e; border: 1px solid #444; border-radius: 8px; padding: 25px; color: #ccc;">
                     <h3 style="color: #6DBE66; font-size: 24px; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 10px;">${cmd.name} 상세 정보</h3>
                     <p style="font-size: 15px; line-height: 1.5; color: #eee; margin-top: 15px;">${cmd.description}</p>
@@ -625,7 +625,7 @@
                 </div>
             `;
 
-            compareModal.style.display = 'flex';
+            modal.style.display = 'flex';
         }
 
         // 명령어 복사하는 함수
@@ -647,10 +647,10 @@
         }
 
         // 현재 선택된 카테고리의 명령어 개수를 업데이트 하는 함수
-        function updateCommandCount(count, categoryName = "전체") {
+        function updateCommandCount(count, label = "전체") {
             const countInfo = document.getElementById('commandCountInfo');
             if (countInfo) {
-                countInfo.innerText = `${categoryName} 명령어: ${count}개`;
+                countInfo.innerText = `${label} 명령어: ${count}개`;
             }
         }
     </script>
